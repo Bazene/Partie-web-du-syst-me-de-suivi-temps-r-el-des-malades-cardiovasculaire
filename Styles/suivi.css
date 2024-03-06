@@ -1,0 +1,154 @@
+.section_patient_vitalSign {
+    width: 83%;
+    margin-left: 17%;
+}
+
+.section_patient_vitalSign > h2 {
+    width: 200px;
+    margin: 20px;
+    font-size: 16px;
+    background-color: #D7E5FF;
+    color: #1F57EC;
+    padding: 10px;
+}
+
+.section_header_suivi {
+    margin: 20px;
+    margin-bottom: 20px;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.other_patient_attributs {
+    width: 730px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color:#D7E5FF;
+    height: 150px;
+    margin-left: 20px;
+    margin-bottom: 40px;
+    border-radius: 15px;
+}
+
+.attributs_patient {
+    display: flex; 
+    flex-direction:row; 
+    align-items:center;
+}
+
+.attributs_patient > svg {
+    margin-right: 5px;
+}
+
+.image_patient {
+    margin-right: 20px;
+}
+
+.image_patient > img {
+    width: 150px;
+    height: 150px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.header_secton_vs {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header_secton_vs > h3 {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.btn_see_vs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_see_more {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    background-color:#1F57EC;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn_see_more_show {
+    display: none;
+}
+
+.section_patient_vitalSign > h3 {
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.section_patient_vitalSign > hr {
+    width:85px;
+    height: 2px;
+    background-color: #1F57EC;
+    margin-left: 21px;
+    margin-bottom: 20px;
+    border: 0px;
+}
+
+.vitalSign_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,  minmax(100px, 180px));
+    grid-auto-rows: minmax(150px, auto);
+    grid-gap : 3rem; 
+    margin-left: 20px;
+}
+
+.view_vitalSign {
+    width: 100%;
+    /* background-color: #D7E5FF; */
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow:0 0 0.3px 0.3px gray;
+}
+
+.view_vitalSign > div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.div_icone_vitalSign {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    padding: 7px;
+    background-color: #8CC5CA;
+    margin-right: 10px;
+}
+
+.state_health > p {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 60px;
+    margin-right: 10px;
+    background-color: #8CC5CA;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.section_patient_vitalSign > h3 {
+    margin-top: 40px;
+}

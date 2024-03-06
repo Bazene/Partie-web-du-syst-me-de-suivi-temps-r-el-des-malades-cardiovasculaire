@@ -1,0 +1,145 @@
+.right_part {
+    margin-left: 17%;
+    width: 83%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboards_section {
+    padding: 20px;
+    font-size: 16px;
+    background-color: #ECF3FD;
+}
+
+.patient_follow {
+    width: 217px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    color: white;
+    /* border-radius: 10px; */
+    /* background-color: #868DFE; */
+    background:linear-gradient(to right, #9EB6F7, #9EB6F7, #9EB6F7); /* Dégradé de la bordure */
+}
+
+
+
+/* PARTIE PATIENTS */
+/* partie barre de recherche */
+.header_patient_follow_section {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_patient_follow_section > form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.btn_search {
+    color:white;
+    background-color:#1F57EC;
+    border: 0px;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.searching_input {
+    font-size:14px;
+    width: 400px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border: solid 1px black;
+    padding-left:30px ;
+}
+
+
+/* e */
+
+
+.display_users_section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,  minmax(200px, 220px));
+    grid-auto-rows: minmax(150px, auto);
+    grid-gap : 3rem; 
+    margin : 20px 10px 20px 95px;
+}
+
+.my_patients {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    /* box-shadow:0 0 5px 5px gray; */
+}
+
+.stroke_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 15px;
+    /* background-color: white; */
+    box-shadow:0 0 0.3px 0.3px gray;
+    /* border: solid 1px #1F57EC; */
+    width: 100%;
+    height: 100%;
+}
+
+.image {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    /* margin-bottom: 10px; */
+    pointer-events: auto;
+}
+
+.image > img {
+    border-radius: 100%;
+    width: 90px;
+    height: 90px;
+    border: solid 10px #D7E5FF;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 96%;
+    padding: 5px;
+    margin-top: 20px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.info > div > strong {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.btn_follow_patient {
+    display:flex; 
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+    padding: 10px;
+    font-size:14px; 
+    color: white;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    background-color: #1F57EC;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn_follow_patient > p {
+    margin-left: 10px;
+}

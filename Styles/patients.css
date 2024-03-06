@@ -1,0 +1,93 @@
+.right_part {
+    margin-left: 17%;
+    width: 83%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.header_patients {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+}
+
+.btn_search {
+    color:white;
+    background-color:#1F57EC;
+    border: 0px;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.searching_input {
+    font-size:14px;
+    width: 400px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border: solid 1px black;
+    padding: 10px;
+    padding-left:30px ;
+}
+
+/* header part of patients */
+.header_section_displaying_patients {
+    display: flex;    
+    flex-direction: row;
+    margin: 0px 20px 10px 20px;
+    padding-left: 10px;
+}
+
+.header_section_displaying_patients > p {
+    font-weight: bolder;
+}
+
+
+.displaying_patients {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0px 20px 0px 20px;
+}
+
+.patient_view {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-top: solid 1px gray;
+}
+
+.patient_view > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.patient_view > div > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+.btn_archived {
+    width: 45px;
+    background-color: #DF1FED;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.btn_follow {
+    width: 45px;
+    background-color: #1FED8D;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}

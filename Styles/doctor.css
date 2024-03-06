@@ -1,0 +1,202 @@
+.right_part {
+    margin-left: 17%;
+    width: 83%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.header_doctor {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+    margin-bottom: 40px;
+}
+
+.tile_btn_add {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btn_add_doctor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-left: 30px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.btn_search {
+    color:white;
+    background-color:#1F57EC;
+    border: 0px;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.searching_input {
+    font-size:14px;
+    width: 400px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border: solid 1px black;
+    padding: 10px;
+    padding-left:30px ;
+}
+
+/* header part of patients */
+.header_section_displaying_doctors {
+    display: flex;    
+    flex-direction: row;
+    margin: 0px 20px 10px 20px;
+    padding-left: 10px;
+}
+
+.header_section_displaying_doctors > p {
+    font-weight: bolder;
+}
+
+.displaying_patients {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0px 20px 0px 20px;
+}
+
+.patient_view {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-top: solid 1px gray;
+}
+
+.patient_view > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.patient_view > div > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+.btn_suppress {
+    width: 45px;
+    background-color: red;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/* FRAME CREATION PART */
+/* .frameCreation {
+    margin-top: -120px;
+    padding-bottom: 500px;
+} */
+
+.frame_creation {
+    display: none;
+    position: absolute;
+    /* z-index: 2; */
+    width: 83%;
+    height: 100vh;
+    /* height: unset; */
+    /* margin-top: -117px; */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.sectionCreation > form {
+    width: 60%;
+    border-color: #243AFF ;
+    margin: auto;
+    margin-top:5%;
+    margin-bottom: 5%;
+    background-color: white;
+    padding-bottom: 2%;
+}
+
+.headerForm {
+    padding: 10px;
+    background:#1F57EC;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.headerForm > h1 {
+    color: white;
+}
+
+.divInputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.divInputsI, .divInputsII {
+    width: 40%;   
+}
+
+.champEntree {
+    width : 100%;
+    padding: 10px;
+    margin-bottom : 10px;
+}
+
+.champPhoto{
+    width: 100%;
+    padding : 8px 10px 8px 10px;
+    margin-bottom: 10px;
+    border: solid 1px;
+    border-color: gray;
+}
+
+.champSelect {
+    width: 109%;
+    background-color: white;
+    padding: 11px;
+    margin-bottom: 10px;
+    border: solid 1px;
+    border-color: gray;
+}
+
+.divCancel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 3%;
+}
+
+.btnCancel {
+    font-size: 13px;
+    background-color: #D71313;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.btnSubmit {
+    display: block;
+    padding : 10px ;
+    background:#1F57EC;
+    color : white ;
+    border:0px ;
+    cursor:pointer;
+    margin-left: 5%;
+}

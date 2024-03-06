@@ -1,0 +1,72 @@
+* {
+    margin : 0px;
+    padding: 0px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    background-color: #ECF3FD;
+}
+
+.nav_bar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 17%;
+    height: 100vh;
+    /* background-color: #4F83F0; */
+    background-color: #1F57EC;
+    color: white;
+}
+
+.logo_ndule {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 0px 0px 20px;
+}
+
+.menu_configuration {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding:20px 20px 20px 20px;
+    margin-bottom: 0px;
+}
+
+.menu_section > a, .configuration_section > a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    padding : 10px 0px 10px 20px;
+    margin-top: 10px ;
+}
+
+.menu_section > div, .configuration_section > div {
+    padding : 10px 0px 10px 20px;
+    margin-top: 10px ;
+}
+
+a > span {
+    margin-left: 10px;
+}
+
+.name_menu_config {
+    border-width: 0px 0px 1px 0px;/* Épaisseur de la bordure */
+    border-style: solid; /* Style de la bordure */
+    border-image: linear-gradient(to right, #b5179e, #a530d1, #9747ff); /* Dégradé de la bordure */
+    border-image-slice: 1; /* Permet au dégradé de remplir toute la bordure */
+}
+
+.current_page {
+    border-radius: 5px;
+    /* background-color: white; */
+    background:linear-gradient(to right, #4F83F0, #4F83F0, #4F83F0); /* Dégradé de la bordure */
+}
