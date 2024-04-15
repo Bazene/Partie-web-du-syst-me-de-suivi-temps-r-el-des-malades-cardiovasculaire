@@ -13,32 +13,47 @@
         try {
             $patientName = $data['patient_name'];
             $patientPassword = $data['patient_password'];
+            $passwordHashed = null;
 
-            // $patientName = "Bazene";
-            // $patientPassword = "hh";
+            // $patientName = "claude";
+            // $patientPassword = "claude";
             
             $patients = Patient :: getAllPatients();
 
             $patientData = null;
             foreach($patients as $patient) {
-                if (password_verify($patientPassword, $patient->getPatientPassword())) { 
+                if (password_verify($patientPassword, $patient->getPatientPassword()) && strcasecmp($patientName, $patient->getPatientName()) == 0) { 
                     $patientData = $patient;
-                    // var_dump($patientData);
-                    // die;
+                    $passwordHashed = $patient->getPatientPassword();
                     break;
                 }
             }
 
 
             if($patientData != null) {
-                
                 // update token
                 $token = bin2hex(random_bytes(32));
 
                 if(Patient :: update_token($patientData->getPatientPassword(), $token)) {
+                    // recupération de l'id du patient
+                    $patientId = Patient :: getIdOnAuthentification($patientName, $passwordHashed);
+
+                    $imagePath = $patientData->getPatientPicture(); // Chemin de l'image du patient
+                    
+                    $patientImage = null;
+                    if (file_exists($imagePath)) { // Vérifier si le fichier existe
+                        $imageBytes = file_get_contents($imagePath); // Lire le contenu du fichier
+
+                        if ($imageBytes !== false) { // Vérifier si la lecture a réussi
+                            $patientImage =  base64_encode($imageBytes);  // Encodage en base64 pour faciliter le transfert
+                        } 
+                    } 
+
+                    
                     // data to retrun to the client
                     $responseData = array(
                         'success' => true,
+                        'patient_id' => $patientId,
                         'patient_name' => $patientData->getPatientName(),
                         'patient_postname'=> $patientData->getPatientPostName(), 
                         'patient_surname' => $patientData->getPatientSurName(),
@@ -51,7 +66,7 @@
                         'patient_role' => $token,
                         'id_doctor' => $patientData->getIdDoctor(),
                         'id_doctor_archived' => $patientData->getIdDoctorArchived(),
-                        'patient_picture' => $patientData->getPatientPicture(),
+                        'patient_picture' => $patientImage,
                         'patient_commune' => $patientData->getPatientCommune(),
                         'patient_quater' => $patientData->getPatientQuater(),
                         'patient_size' => $patientData->getPatientSize(),
@@ -63,11 +78,13 @@
                     echo json_encode($responseData);
                 }
 
-            } else {
+            } 
+            else {
                 echo json_encode(["success" => false, "error" => "Nom d'utilisateur ou mot de passe incorrect"]);
             }
             
-        } catch (PDOException $e) {
+        } 
+        catch (PDOException $e) {
             echo json_encode(["success" => false, "error" => $e->getMessage()]);
         }
 

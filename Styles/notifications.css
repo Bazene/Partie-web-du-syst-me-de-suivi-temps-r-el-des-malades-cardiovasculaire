@@ -1,0 +1,92 @@
+.right_part {
+    width: 83%;
+    margin-left: 17%;
+}
+
+.header_notification {
+    margin: 10px 20px 50px 20px;
+    padding : 10px 0px 10px 0px;
+}
+
+.header_notification > h2 {
+    position: fixed;
+    width: 100px;
+    font-size: 16px;
+    background-color: #D7E5FF;
+    color: #1F57EC;
+    padding: 10px;
+}
+
+.notification_to_generate {
+    margin: 10px 20px 10px 20px;
+    border-left: solid 3px #1F57EC;
+    background-color: white;
+    padding: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.div_header_notification {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btns_on_notifications {
+    display: flex;
+    flex-direction: row;
+}
+
+.btn_follow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px; 
+    width:50px; 
+    background-color:#1F57EC;
+    color: white;
+    border: 0px;
+}
+
+.btn_delete_notification {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    width:80px; 
+    background-color:#D71313;
+    color: white;
+    border: 0px;
+}
+
+.date_and_hour {
+    color:#1F57EC;
+}
+
+.name_patient_notification {
+    color: black;
+}
+
+.vitalSign {
+    color: #D71313;
+}
+
+.no_result_classe {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 80%;
+    padding: 10px;
+    margin: auto;
+    background-color: rgba(185, 135, 173, 30%);
+    border: solid 1px #B987AD;
+    border-radius: 10px;
+}

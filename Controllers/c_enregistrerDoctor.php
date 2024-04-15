@@ -11,7 +11,7 @@
         $doctor_phone_number = $_POST['doctor_phone_number'];
         $doctor_speciality = $_POST['doctor_speciality'];
         $doctor_hospital = $_POST['service_hospital'];
-        $doctor_password = $_POST['doctor_password'];
+        $doctor_password = "1234";
 
         $doctor_date_created = date("d-m-y"); // actuel date
         $doctor_role = "doctor";
@@ -29,10 +29,12 @@
                 $tempFolder = $doctor_picture['tmp_name'];
                 $fileName = basename($doctor_picture['name']);
                 $destinationFolder = '../images/'.$fileName;
+
+                $fileNameDb = '../images/'.$fileName;
                 
                 // we verify if the picture is moved in the destination file
                 if(move_uploaded_file($tempFolder, $destinationFolder)) {
-                    $doctor = new Doctor($doctor_name, $doctor_postname, $doctor_surname, $doctor_gender, $doctor_mail, $doctor_phone_number, $doctor_password, $fileName ,$doctor_date_created, $doctor_speciality, $doctor_hospital, $doctor_role);
+                    $doctor = new Doctor($doctor_name, $doctor_postname, $doctor_surname, $doctor_gender, $doctor_mail, $doctor_phone_number, $doctor_password, $fileNameDb ,$doctor_date_created, $doctor_speciality, $doctor_hospital, $doctor_role);
 
                     if($doctor->createDoctor()) {
                         header("Location:../views/doctor.php");

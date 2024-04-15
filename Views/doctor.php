@@ -1,4 +1,4 @@
-
+<?php include_once "../includes/redurection_to_log_in.php" ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,47 +55,31 @@
                    
                         <div class="divInputs">
                             <div class="divInputsI">
-                                
-                                <label for="doctor_name">Nom</label> <br>
-                                <input type="text" name="doctor_name" class="champEntree" required/> <br><br>
 
-                                <label for="doctor_postname">Post-nom</label> <br>
-                                <input type="text" name="doctor_postname" class="champEntree" required/> <br><br>
+                                <input type="text" name="doctor_name" placeholder="Nom" class="champEntree" required/> <br><br>
+                                <input type="text" name="doctor_postname" placeholder="Post-nom" class="champEntree" required/> <br><br>
+                                <input type="text" name="doctor_surname" placeholder = "Prénom" class="champEntree" required/> <br><br>
 
-                                <label for="doctor_surname">Prénom</label> <br>
-                                <input type="text" name="doctor_surname" class="champEntree" required/> <br><br>
-
-                                <label for="doctor_gender">Tarif</label> <br>
                                 <select name = "doctor_gender" class="champSelect" required>
                                     <option value="">Choisi ton genre</option>
                                     <option value="masculin">Masculin</option>
                                     <option value="feminin">Féminin</option>
                                 </select><br><br>
-                                
-                                <label for="doctor_mail">Addresse mail</label> <br>
-                                <input type="mail" name="doctor_mail" class="champEntree" required/> <br><br>
+                                <input type="mail" name="doctor_mail" placeholder="Addresse mail" class="champEntree" required/> <br><br>
                             </div>
 
                             <div class="divInputsII">
-                                <label for="doctor_phone_number">Numéro de téléphone</label> <br>
-                                <input type="number" min="0" step="1" name="doctor_phone_number" class="champEntree" required/> <br><br>
-
-                                <label for="doctor_picture">Photo</label> <br>
-                                <input type="file" name="doctor_picture" class="champPhoto" required/><br><br>
+                                <input type="number" placeholder="Numéro de téléphone" min="0" step="1" name="doctor_phone_number" class="champEntree" required/> <br><br>
+                                <input type="file" name="doctor_picture" class="champPicture" required/><br>
                             
-                                <label for="doctor_speciality">Spécialité</label> <br>
-                                <input type="text" name="doctor_speciality" class="champEntree" required/><br><br>
-
-                                <label for="service_hospital">Hôspital de service</label> <br>
-                                <input type="text" name="service_hospital" class="champEntree" required/><br><br>
-
-                                <label for="doctor_password">Mot de passe</label> <br>
-                                <input type="text" name="doctor_password" class="champEntree" required/><br><br>
+                                <label for="doctor_speciality"></label> <br>
+                                <input type="text" placeholder="Spécialité" name="doctor_speciality" class="champEntree" required/><br><br>
+                                <input type="text" placeholder="Hôspital de service" name="service_hospital" class="champEntree" required/><br><br>
                             </div>
                         </div>
                     
                         <div class="divCancel"> 
-                            <button type="button" class="btnCancel">Cancel</button>
+                            <button type="button" class="btnCancel">Annuler</button>
                             <input type="submit" class="btnSubmit" value="Enregistrer"/> <br>
                         </div>
 
@@ -125,58 +109,60 @@
                         elseif(getDoctorsSearch() == "no_doctor_founded") {
                             $doctors = null;
                         }
-                    }
-                    else {
-                        $doctors = getAllDoctors();
-                    }
+                    } else $doctors = getAllDoctors();
 
                     if(!empty($doctors)) {
                         if(count($doctors)>0) {
                             foreach($doctors as $doctor) {
-                        
-                                echo '
-                                    <secion class="patient_view">
-                                        <div style="width:300px;">
-                                            <img src="../images/'.$doctor->getDoctorPicture().'">
-                                            <div>
-                                                <strong>'.$doctor->getDoctorName().' '.$doctor->getDoctorPostName().' '.$doctor->getDoctorSurName().'</strong>
-                                                <p style="font-size: 12px;">'.$doctor->getDoctorMail().'</p>
-                                            </div>
-                                        </div>
+                                if($doctor->getDoctorRole() !== 'doctorCenter') {
+                                    if($doctor->getDoctorPicture() == "") $doctorPicture = '../images/default_image.png'; 
+                                    else  $doctorPicture = $doctor->getDoctorPicture();
 
-                                        <div style="width:100px;">
-                                            '.$doctor->getDoctorGender().'
-                                        </div>
+                                    echo '
+                                        <secion class="patient_view">
+                                            <section class ="patient_view_left">
+                                                <div style="width:305px;">
+                                                    <img src="'.$doctorPicture.'">
+                                                    <div>
+                                                        <strong>'.$doctor->getDoctorName().' '.$doctor->getDoctorPostName().' '.$doctor->getDoctorSurName().'</strong>
+                                                        <p style="font-size: 12px;">'.$doctor->getDoctorMail().'</p>
+                                                    </div>
+                                                </div>
 
-                                        <div style="width:130px;">
-                                            '.$doctor->getDoctorPhoneNumber().'
-                                        </div>
+                                                <div style="width:100px;">
+                                                    '.$doctor->getDoctorGender().'
+                                                </div>
 
-                                        <div style="width:120px;">
-                                            '.$doctor->getDoctorDateCreated().'
-                                        </div>
+                                                <div style="width:130px;">
+                                                    '.$doctor->getDoctorPhoneNumber().'
+                                                </div>
 
-                                        <div class="btns_archiver_suivre">
-                                            
-                                        </div>
-                                    </secion>';
+                                                <div style="width:120px;">
+                                                    '.$doctor->getDoctorDateCreated().'
+                                                </div>
+                                            </section>
+
+                                            <form method="POST" action="../Controllers/c_deleteDoctor.php" enctype="multipart/form-data">
+                                                <input type = "hidden" name="id_doctor" value = "'.$doctor->getIdDoctor($doctor).'">
+                                                <input type="submit" class="btn_delete" style="border:0px;" value="supprimer">
+                                            </form>
+                                        </secion>
+                                        ';
+                                }
                             }
                         }
-                        else {
-                            echo '
-                                <secion class="patient_view">
-                                    Aucun Docteur n\'est enregistré
-                                </section>';
-                        }
                     }
-                        
-                    elseif ($doctors == null) {
-                        
+
+                    elseif ($doctors == null && (getDoctorsSearch() == "no_doctor_founded")) {
                         echo '
-                            <secion class="patient_view">
-                                Aucun Docteur trouvé sous le nom chercher
-                            </section>';
-                
+                        <div class="no_result_classe" style="width:73%; margin-top:40px;">
+                            Aucun médecin trouvé, utilise son nom d\'utilisateur pour faire la recherche
+                        </div>';
+                    }  else {
+                        echo 
+                            '<div class="no_result_classe" style="width:73%; margin-top:40px;">
+                                Aucun médecin n\'est enregistrer dans le système
+                            </div>';
                     }
                 ?>
 

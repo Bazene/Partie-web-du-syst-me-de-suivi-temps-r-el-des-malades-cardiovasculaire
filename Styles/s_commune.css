@@ -70,3 +70,44 @@ a > span {
     /* background-color: white; */
     background:linear-gradient(to right, #4F83F0, #4F83F0, #4F83F0); /* Dégradé de la bordure */
 }
+
+#div_notification {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#div_notification > span {
+    margin-left: 10px;
+}
+
+#icone_show_notification {
+    display: none;
+}
+
+#normal_icone {
+    /* display: none; */
+}
+
+#nbr_notification {
+    display: none;
+    margin-top: 5px;
+    color:#FFFF99;
+    font-size: 12px;
+}
+
+#submit_notification {
+    background-color:#1F57EC;
+    border: 0px;
+    color:white;
+    margin-left: 10px;
+}
+
+.notification_link_formuler, .links_menu_config {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 0px;
+}

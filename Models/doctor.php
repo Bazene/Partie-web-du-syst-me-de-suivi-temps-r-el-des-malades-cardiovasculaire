@@ -66,8 +66,62 @@ class Doctor {
         ]);
 
         if($execution) {
-            return $preparequery->fetch() ? true : false;
-        }
+            if($data = $preparequery->fetch()) {
+                return $data['id'];
+            } else return null;
+        } else return null;
+    }
+
+    // GET DOCTOR BY ID
+    static function getDoctorById($ID_DOCTOR) {
+        global $db;
+
+        $query = 'SELECT * FROM doctor WHERE id = :id';
+        $preparequery = $db->prepare($query);
+        $execution = $preparequery->execute([
+            ':id' => $ID_DOCTOR
+        ]);
+
+        if($execution) {
+            if($data = $preparequery->fetch()) {
+                $doctor = new Doctor($data['doctor_name'], $data['doctor_postname'], $data['doctor_surname'], 
+                $data['doctor_gender'], $data['doctor_mail'], $data['doctor_phone_number'], $data['doctor_password'], 
+                $data['doctor_picture'], $data['doctor_date_created'], $data['doctor_speciality'], $data['doctor_hospital'], $data['doctor_role']);
+
+                return $doctor;
+            } else return null;
+        } else return null;   
+    }
+
+    // FUNCTION UPDATE DOCTOR
+    static function updateDoctor($id_user, $user_name, $user_postname, $user_surname, $user_phone_number) {
+        global $db;
+
+        $query = 'UPDATE doctor SET doctor_name = :doctor_name, doctor_postname = :doctor_postname, doctor_surname = :doctor_surname, doctor_phone_number = :doctor_phone_number WHERE id = :id';        
+        $prepareQuery = $db->prepare($query);
+        $execution = $prepareQuery->execute([
+            ':id' => $id_user,
+            ':doctor_name' => $user_name,
+            ':doctor_postname' => $user_postname,
+            ':doctor_surname' => $user_surname,
+            ':doctor_phone_number' => $user_phone_number
+        ]);
+
+        return $execution ? true : false;
+    }
+
+     // FUNCTION THAT UPDATE THE TUTEUR PICTURE
+    static function updateDoctorPicture($id_user, $user_picture ) {
+        global $db;
+
+        $query = 'UPDATE doctor SET doctor_picture = :doctor_picture WHERE id = :id';        
+        $prepareQuery = $db->prepare($query);
+        $execution = $prepareQuery->execute([
+            ':id' => $id_user,
+            ':doctor_picture' => $user_picture
+        ]);
+
+        return $execution ? true : false;
     }
 
     // FUNCTION UPDATE PASSWORD
@@ -126,13 +180,65 @@ class Doctor {
                 array_push($doctors, $doctor) ;
             }
 
-            if(count($doctors) > 0) {
-                return $doctors;
+            if(count($doctors) > 0) return $doctors;
+            else return "no_doctor_founded";
+        } else return [];
+    }
+
+    static function getIdDoctorCenter() {
+        global $db;
+
+        $query = 'SELECT * FROM doctor WHERE doctor_role = :doctor_role';
+        $prepareQuery = $db->prepare($query);
+        $execution = $prepareQuery->execute([
+            ':doctor_role' => 'doctorCenter'
+        ]);
+
+        if($execution) {
+            if($data = $prepareQuery->fetch()) {
+                return $data['id'];
+            } else return null;
+        } else return null;
+    }
+
+    public function getIdDoctor($DOCTOR) {
+        global $db;
+
+        $query = 'SELECT * FROM doctor WHERE 1';
+        $prepareQuery = $db->prepare($query);
+        $execution = $prepareQuery -> execute([]);
+
+        $doctors = [];
+        if($execution) {
+            while($data = $prepareQuery->fetch()) {
+                $doctor = new Doctor($data['doctor_name'], $data['doctor_postname'], $data['doctor_surname'], 
+                $data['doctor_gender'], $data['doctor_mail'], $data['doctor_phone_number'], $data['doctor_password'],
+                $data['doctor_picture'], $data['doctor_date_created'], $data['doctor_speciality'], $data['doctor_hospital'], $data['doctor_role']);
+                
+                $doctors[$data['id']] = $doctor;
             }
-            else {
-                return "no_doctor_founded";
+
+            $idDoctor = NULL;
+            foreach($doctors as $doctor) {
+                if($doctor == $DOCTOR) {
+                    $idDoctor = array_search($doctor, $doctors);
+                }
             }
-        } 
+        }
+
+        return $idDoctor;
+    }
+
+    static function deleteDoctor($ID_DOCTOR) {
+        global $db;
+
+        $query = 'DELETE FROM doctor WHERE id = :id';
+        $prepareQuery = $db->prepare($query);
+        $execution = $prepareQuery->execute([
+            ':id' => $ID_DOCTOR
+        ]);
+
+        return $execution ? true : false;
     }
 
     // GETTERS

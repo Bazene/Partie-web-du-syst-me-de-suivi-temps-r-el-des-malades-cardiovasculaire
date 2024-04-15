@@ -1,59 +1,139 @@
+<?php include_once "../includes/redurection_to_log_in.php" ?>
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Parametres</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
 
-        <?php include_once "../includes/links.php";?>
-        <link rel="stylesheet" href="../Styles/parametres.css">
-    </head>
+    <?php include_once "../includes/links.php";?>
+    <link rel="stylesheet" href="../Styles/parametres.css">
+    <script src="../Js_files/parametres.js" defer></script>
+</head>
+<body>
+    <?php include_once "../Controllers/getAllDoctors.php" ?>
+    <?php include_once "../Controllers/getTuteurByIdPatient.php" ?>
+    <?php include_once "../includes/nav_bar.php" ;?>
 
-    <body>
-        <?php include_once "../includes/nav_bar.php" ;?>
-        
-        <section class="all_attributs_for_doctor">
-            <section class="image_doctor">
-                <img src="../images/médecin_1.jpg"> 
-            </section>
+    <?php 
+        if($_SESSION['connected'] === "tuteur") {
+            $id_user = $_SESSION['id_patient_for_tuteur'] ;
+            $user_name = "tuteur";
 
-            <section class="doctor_speciality">
-                <p><strong>CARDIOLOGUE</strong></p>
-            </section>
+            $tuteur = getTuteurByIdPatient($id_user);
+            $user_picture_display = $tuteur->getTuteurPicture();
+            $user_name_display = $tuteur->getTuteurName();
+            $user_postname_display = $tuteur->getTuteurPostName();
+            $user_surname_display = $tuteur->getTuteurSurName();
+            $user_mail = $tuteur->getTuteurMail();
+            $user_phone_number_display = $tuteur->getTuteurPhoneNumber();
+
+        } elseif ($_SESSION['connected'] === "doctor") {
+            $id_user = $_SESSION['idDoctor'] ;
+            $user_name = "doctor";
+
+            $doctor = getDoctorById($id_user);
+            $user_picture_display = $doctor->getDoctorPicture();
+            $user_name_display = $doctor->getDoctorName();
+            $user_postname_display = $doctor->getDoctorPostName();
+            $user_surname_display = $doctor->getDoctorSurName();
+            $user_mail = $doctor->getDoctorMail();
+            $user_phone_number_display = $doctor->getDoctorPhoneNumber();
+        }
+    ?>
+
+    <section class="right_part">
+        <section class="frame_creation">
+            <section class="sectionCreation">
+                <form class="formuler_1" method="POST" action="../Controllers/c_editDoctorAndTuteur.php" enctype="multipart/form-data">
+                    <div class="headerForm">
+                        <h1>MODIFIER PROFILE</h1>
+                    </div>
+                    <?php
+                        echo '
+                                <div class="divInputs">
+                                    <div class="divInputsI">
+                                        <input type="text" name="user_name" value = "'.$user_name_display.'" placeholder="Nom" class="champEntree" required/> <br><br>
+                                        <input type="text" name="user_postname" value = "'.$user_postname_display.'" placeholder="Post-nom" class="champEntree" required/> <br><br>
+                                    </div>
+
+                                    <div class="divInputsII">
+                                        <input type="text" name="user_surname" value = "'.$user_surname_display.'" placeholder="Prénom" class="champEntree" required/> <br><br>
+                                        <input type="number" min="0" step="1" name="user_phone_number" value = "'.$user_phone_number_display.'" placeholder="Numéro de téléphone" class="champEntree" required/> <br><br>
+                                        <input type = "hidden" name="id_user" value = "'.$id_user.'">
+                                        <input type = "hidden" name="user_concerned" value = "'.$user_name.'">
+                                    </div>
+                                </div>
+                            ';
+                        ?>
+                
+                    <div class="divCancel"> 
+                        <button type="button" class="btnCancel">Annuler</button>
+                        <input type="submit" class="btnSubmit" value="Enregistrer"/> <br>
+                    </div>
+                </form>
+
+                <form class="formuler_2" method="POST" action="../Controllers/c_editPictureDoctorAndTuteur.php" enctype="multipart/form-data">
+                    <div class="headerForm">
+                        <h1>MODIFIER PHOTO</h1>
+                    </div>
+                  
+                        <div class="divInputs">
+                            <div class="divInputsII">
+                                <?php
+                                    echo '
+                                        <input type="file" name="user_picture" class="champPicture" required/><br><br>                            
+                                        <input type = "hidden" name="user_concerned" value = "'.$user_name.'">
+                                        <input type = "hidden" name="id_user" value = "'.$id_user.'">
+                                    ';
+                                ?>
+                            </div>
+                        </div>
+                
+                    <div class="divCancel"> 
+                        <button type="button" class="btnCancel2">Annuler</button>
+                        <input type="submit" class="btnSubmit" value="Enregistrer"/> <br>
+                    </div>
+                </form> 
+            </section>      
         </section>
 
-        <section class="all_doctor_info">
-            <div class="all_doctor_info_left_part">
-                Dr. <br>
-                <strong style="font-size: 20px;">BAZENE SERGE Amos </strong> <br><br>
-                <p>Travaille en temps plein à<br>
-                l'hôpital Général de Goma, <br> dans le département de <br>
-                Cardiologie</p>
-            </div>
+        <section class="my_patients">
+            <div class="stroke_section">
+                <?php
+                    if($user_picture_display == "") $photo_user = '../images/default_image.png';
+                    else $photo_user = $user_picture_display;
+                
+                echo '
+                    <div class="image">
+                        <img src="'.$photo_user.'">
+                    </div>
 
-            <div class="all_doctor_info_right_part">
-                <h2>Contacts</h2><hr>
+                    <div class="info">
+                        <section class="header_info_user">
+                            <div style="color:black; padding-left:50px; display: flex; flex-direction:column; justify-content:center; align-items:center;">
+                                <strong style="font-size:16px; margin-bottom:5px;">'.$user_name_display.' '.$user_postname_display.' '.$user_surname_display.'</strong> <br>
+                                <span style="font-size:14px; color:gray;">'.$user_mail.'</span>
+                            </div> 
 
-                <div>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.62 10.79C8.06 13.62 10.38 15.93 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.94C17.55 15.31 18.76 15.51 20 15.51C20.55 15.51 21 15.96 21 16.51V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="#1F57EC"/>
-                    </svg> 
-                    975 149 026
-                </div>
+                            <div id="edit_profil_user" style="background-color: #1F57EC;" >
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C20.8027 6.94749 20.8763 6.8376 20.9264 6.71663C20.9766 6.59565 21.0024 6.46597 21.0024 6.335C21.0024 6.20403 20.9766 6.07435 20.9264 5.95338C20.8763 5.83241 20.8027 5.72252 20.71 5.63L18.37 3.29C18.2775 3.1973 18.1676 3.12375 18.0466 3.07357C17.9257 3.02339 17.796 2.99756 17.665 2.99756C17.534 2.99756 17.4043 3.02339 17.2834 3.07357C17.1624 3.12375 17.0525 3.1973 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="white"/>
+                                </svg>
+                            </div>
+                        </section>
 
-                <div>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 4.5C5.20435 4.5 4.44129 4.81607 3.87868 5.37868C3.31607 5.94129 3 6.70435 3 7.5V7.8015L12 12.648L21 7.803V7.5C21 6.70435 20.6839 5.94129 20.1213 5.37868C19.5587 4.81607 18.7956 4.5 18 4.5H6ZM21 9.5055L12.3555 14.16C12.2462 14.2188 12.1241 14.2496 12 14.2496C11.8759 14.2496 11.7538 14.2188 11.6445 14.16L3 9.5055V16.5C3 17.2956 3.31607 18.0587 3.87868 18.6213C4.44129 19.1839 5.20435 19.5 6 19.5H18C18.7956 19.5 19.5587 19.1839 20.1213 18.6213C20.6839 18.0587 21 17.2956 21 16.5V9.5055Z" fill="#1F57EC"/>
-                    </svg>
-                    bazenesergeamos0@gmail.com
-                </div>
-
-                <div class="icone_edit">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C20.8027 6.94749 20.8763 6.8376 20.9264 6.71663C20.9766 6.59565 21.0024 6.46597 21.0024 6.335C21.0024 6.20403 20.9766 6.07435 20.9264 5.95338C20.8763 5.83241 20.8027 5.72252 20.71 5.63L18.37 3.29C18.2775 3.1973 18.1676 3.12375 18.0466 3.07357C17.9257 3.02339 17.796 2.99756 17.665 2.99756C17.534 2.99756 17.4043 3.02339 17.2834 3.07357C17.1624 3.12375 17.0525 3.1973 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="white"/>
-                    </svg>
-                </div>
+                        <section style = "margin-bottom:10px; display:flex; flex-direction:row; justify-content:center; align-items:center;">
+                            <svg width="24" height="24" style="margin-right:5px;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.62 10.79C8.06 13.62 10.38 15.93 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.94C17.55 15.31 18.76 15.51 20 15.51C20.55 15.51 21 15.96 21 16.51V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="#1F57EC"/>
+                            </svg>'.$user_phone_number_display.' 
+                        </section>
+                    </div>
+                    ';
+                ?>
             </div>
         </section>
-    </body>
+    </section>
+</body>
 </html>

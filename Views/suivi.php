@@ -1,3 +1,5 @@
+<?php include_once "../includes/redurection_to_log_in.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,29 +10,107 @@
     <?php include_once "../includes/links.php";?>
     <link rel="stylesheet" href="../Styles/suivi.css">
     <script src="../Js_files/suivi.js" defer></script>
+
+    <script src="../Js_files/patientInformation.js" defer></script>
+    <script src="../Js_files/vitalSingRealTime.js" defer></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="../Js_files/graphique.js" defer></script>
 </head>
 
 <body>
-
-    <?php include_once "../includes/nav_bar.php" ;?>
+    <?php include_once "../includes/nav_bar.php"; ?>
 
     <section class="section_patient_vitalSign">
-        <h2>Information sur le patient</h2>
+        <section class="frame_creation">
+            <section class="sectionCreation">
+                <form method="POST" action="../Controllers/c_enregistrerTuteur.php" enctype="multipart/form-data">
+                    <div class="headerForm">
+                        <h1>AJOUTER UN TUTEUR</h1>
+                    </div>
+
+                    <!-- <div class = "affichageErreur">
+                        <p>Salut</p>
+                    </div> --> 
+                
+                    <div class="divInputs">
+                        <div class="divInputsI">
+                            <input type="text" name="tuteur_name" placeholder="Nom" class="champEntree" required/> <br><br>
+
+                            <input type="text" name="tuteur_postname" placeholder="Post-nom" class="champEntree" required/> <br><br>
+
+                            <input type="text" name="tuteur_surname" placeholder="Prénom" class="champEntree" required/> <br><br>
+
+                            <select name = "tuteur_gender" class="champSelect" required>
+                                <option value="" style="color:rgba(128, 128, 128, 20%);">Choisi ton genre</option>
+                                <option value="masculin">Masculin</option>
+                                <option value="feminin">Féminin</option>
+                            </select><br><br>
+                        </div>
+
+                        <div class="divInputsII">
+                            <input type="mail" name="tuteur_mail" placeholder="Adresse mail" class="champEntree" required/> <br><br>
+
+                            <input type="number" min="0" step="1" name="tuteur_phone_number" placeholder="Numéro de téléphone" class="champEntree" required/> <br><br>
+                        
+                            <input type="text" name="relationship_type" placeholder="Type de relation" class="champEntree" required/><br><br>
+
+                            <?php 
+                                $id_patient = $_SESSION['id_patient_for_vitalSign'] ;
+                                echo '<input type = "hidden" name="id_patient" value = "'.$id_patient.'">';
+                            ?>
+                        </div>
+                    </div>
+                
+                    <div class="divCancel"> 
+                        <button type="button" class="btnCancel">Annuler</button>
+                        <input type="submit" class="btnSubmit" value="Enregistrer"/> <br>
+                    </div>
+                    
+                </form>
+            </section>      
+        </section>
+
+        <section class="section_dashbord_suivi">
+            <h2>Information sur le patient</h2>
+
+            <form method="POST" class="btn_archived" action="../Controllers/c_archive_patient.php" enctype="multipart/form-data">
+                <input type = "hidden" name="id_patient" value = <?php echo $_SESSION['id_patient_for_vitalSign'] ; ?> >
+                <input type = "hidden" name="id_doctor_archiver" value = <?php echo $_SESSION['idDoctor'] ; ?> >
+                <input type="submit" style="border:0px; background-color: #B987AD; color:white; cursor:pointer;" value="archiver">
+            </form>
+
+            <div class="btn_add_tuteur">
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_155_30)">
+                    <path d="M11 9V5H9V9H5V11H9V15H11V11H15V9H11ZM10 20C7.34784 20 4.8043 18.9464 2.92893 17.0711C1.05357 15.1957 0 12.6522 0 10C0 7.34784 1.05357 4.8043 2.92893 2.92893C4.8043 1.05357 7.34784 0 10 0C12.6522 0 15.1957 1.05357 17.0711 2.92893C18.9464 4.8043 20 7.34784 20 10C20 12.6522 18.9464 15.1957 17.0711 17.0711C15.1957 18.9464 12.6522 20 10 20Z" fill="#1F57EC"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_155_30">
+                    <rect width="20" height="20" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+            </div>
+
+            <!-- <div class="btn_rapport">
+                rapport
+            </div> -->
+        </section>
 
         <section class="section_header_suivi">
-            <div style="width:300px;">
-                Noms : BAZENE SERGE Amos <br>
-                Age : 22
+            <div id="div_name_age" style="width:300px;">
+                Noms : <br>
+                Age : 
             </div>
           
-            <div style="width:200px;">
-                Genre : Masculin <br>
-                Contact : 975 149 026
+            <div id ="div_gender_contact" style="width:200px;">
+                Genre :  <br>
+                Contact : 
             </div>
            
-            <div style="width:200px;">
-                Poids : 57 kg<br>
-                Taille : 1,68 m
+            <div id="div_weight_size" style="width:200px;">
+                Poids : <br>
+                Taille : 
             </div>
 
             <div class="btn_see_more">
@@ -49,33 +129,39 @@
         </section>
 
         <section class="other_patient_attributs" style="display:none;"> 
-            <div class="image_patient">
-                <img src="../images/serge.JPG">
+            <div class="attributs_patient">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 4.5C5.20435 4.5 4.44129 4.81607 3.87868 5.37868C3.31607 5.94129 3 6.70435 3 7.5V7.8015L12 12.648L21 7.803V7.5C21 6.70435 20.6839 5.94129 20.1213 5.37868C19.5587 4.81607 18.7956 4.5 18 4.5H6ZM21 9.5055L12.3555 14.16C12.2462 14.2188 12.1241 14.2496 12 14.2496C11.8759 14.2496 11.7538 14.2188 11.6445 14.16L3 9.5055V16.5C3 17.2956 3.31607 18.0587 3.87868 18.6213C4.44129 19.1839 5.20435 19.5 6 19.5H18C18.7956 19.5 19.5587 19.1839 20.1213 18.6213C20.6839 18.0587 21 17.2956 21 16.5V9.5055Z" fill="#1F57EC"/>
+                </svg> 
+                <p id="p_mail_adress">bazenesergeamos0@gmail.com</p>
             </div>
 
-            <div >
-                <div class="attributs_patient">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 4.5C5.20435 4.5 4.44129 4.81607 3.87868 5.37868C3.31607 5.94129 3 6.70435 3 7.5V7.8015L12 12.648L21 7.803V7.5C21 6.70435 20.6839 5.94129 20.1213 5.37868C19.5587 4.81607 18.7956 4.5 18 4.5H6ZM21 9.5055L12.3555 14.16C12.2462 14.2188 12.1241 14.2496 12 14.2496C11.8759 14.2496 11.7538 14.2188 11.6445 14.16L3 9.5055V16.5C3 17.2956 3.31607 18.0587 3.87868 18.6213C4.44129 19.1839 5.20435 19.5 6 19.5H18C18.7956 19.5 19.5587 19.1839 20.1213 18.6213C20.6839 18.0587 21 17.2956 21 16.5V9.5055Z" fill="#1F57EC"/>
-                    </svg> 
-                    <p>bazenesergeamos0@gmail.com</p>
-                </div>
+            <div class="attributs_patient" style = "margin-bottom:30px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_151_47)">
+                    <path d="M4.929 16.3785C3.119 16.9215 2 17.6715 2 18.5C2 20.157 6.477 21.5 12 21.5C17.523 21.5 22 20.157 22 18.5C22 17.6715 20.8805 16.9215 19.071 16.3785" stroke="#1F57EC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 17.5C12 17.5 18.5 13.252 18.5 8.341C18.5 4.839 15.59 2 12 2C8.41 2 5.5 4.839 5.5 8.341C5.5 13.252 12 17.5 12 17.5Z" stroke="#1F57EC" stroke-width="4" stroke-linejoin="round"/>
+                    <path d="M12 11C12.663 11 13.2989 10.7366 13.7678 10.2678C14.2366 9.79893 14.5 9.16304 14.5 8.5C14.5 7.83696 14.2366 7.20107 13.7678 6.73223C13.2989 6.26339 12.663 6 12 6C11.337 6 10.7011 6.26339 10.2322 6.73223C9.76339 7.20107 9.5 7.83696 9.5 8.5C9.5 9.16304 9.76339 9.79893 10.2322 10.2678C10.7011 10.7366 11.337 11 12 11Z" stroke="#1F57EC" stroke-width="4" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_151_47">
+                    <rect width="24" height="24" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+                <p id="p_commune_quater">Commune : ; Quartier : </p>
+            </div>
 
-                <div class="attributs_patient">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_151_47)">
-                        <path d="M4.929 16.3785C3.119 16.9215 2 17.6715 2 18.5C2 20.157 6.477 21.5 12 21.5C17.523 21.5 22 20.157 22 18.5C22 17.6715 20.8805 16.9215 19.071 16.3785" stroke="#1F57EC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 17.5C12 17.5 18.5 13.252 18.5 8.341C18.5 4.839 15.59 2 12 2C8.41 2 5.5 4.839 5.5 8.341C5.5 13.252 12 17.5 12 17.5Z" stroke="#1F57EC" stroke-width="4" stroke-linejoin="round"/>
-                        <path d="M12 11C12.663 11 13.2989 10.7366 13.7678 10.2678C14.2366 9.79893 14.5 9.16304 14.5 8.5C14.5 7.83696 14.2366 7.20107 13.7678 6.73223C13.2989 6.26339 12.663 6 12 6C11.337 6 10.7011 6.26339 10.2322 6.73223C9.76339 7.20107 9.5 7.83696 9.5 8.5C9.5 9.16304 9.76339 9.79893 10.2322 10.2678C10.7011 10.7366 11.337 11 12 11Z" stroke="#1F57EC" stroke-width="4" stroke-linejoin="round"/>
-                        </g>
-                        <defs>
-                        <clipPath id="clip0_151_47">
-                        <rect width="24" height="24" fill="white"/>
-                        </clipPath>
-                        </defs>
-                    </svg>
-                    <p>Commune : Goma ; Quartier : Himbi2</p>
-                </div>
+            <h1>Information sur le tuteur</h1> <hr style="color:#1F57EC; width:190px; margin-bottom:10px;">
+            <div class="orther_info_patient">
+                <p id="p_name_tuteur">Nom tuteur :</p>
+                <p id="p_mail_tuteur">Mail :</p>
+                <p id="p_contact_tuteur">Contact :</p>
+                <p id="p_gender_tuteur">Genre :</p>
+            </div>
+
+            <div class="no_tuteur_classe">
+                Aucun tuteur n'est associé à ce patient
             </div>
         </section>
 
@@ -103,11 +189,11 @@
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <span style="font-size:25px; margin-right:10px;">60</span> bpm
+                    <span id="span_heart_rate" style="font-size:25px; margin-right:10px;">0</span> BPM
                 </div>
 
                 <div class="state_health" style="margin-bottom: 20px;">
-                    <p style="background-color: #B987AD; color:white;">Normal</p>
+                    <p style="background-color: #B987AD; color:white;">...</p>
                 </div>
 
                 <div>
@@ -139,11 +225,11 @@
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <span style="font-size:25px; margin-right:10px;">96</span> %
+                    <span id="span_spo2" style="font-size:25px; margin-right:10px;">0</span> %
                 </div>
 
                 <div class="state_health" style="margin-bottom: 20px;">
-                    <p style="background-color:#F8DEBD;">Normal</p>
+                    <p style="background-color:#F8DEBD;">...</p>
                 </div>
 
                 <div>
@@ -173,11 +259,11 @@
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <span style="font-size:25px; margin-right:10px;">36</span> °C
+                    <span id="span_temperature" style="font-size:25px; margin-right:10px;">0</span> °C
                 </div>
 
                 <div class="state_health" style="margin-bottom: 20px;">
-                    <p style="background-color: #F9C4C3;">Normal</p>
+                    <p style="background-color: #F9C4C3;">...</p>
                 </div>
 
                 <div>
@@ -224,11 +310,11 @@
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <span style="font-size:25px; margin-right:10px;">120</span> mmol/L
+                    <span id="span_glycemie" style="font-size:25px; margin-right:10px;">0</span> mg/dL
                 </div>
 
                 <div class="state_health" style="margin-bottom: 20px;">
-                    <p>Normal</p>
+                    <p>...</p>
                 </div>
 
                 <div>
@@ -243,7 +329,6 @@
                         </defs>
                     </svg>
                 </div>
-
             </section>
 
             <section class="view_vitalSign">
@@ -258,11 +343,11 @@
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <span style="font-size:25px; margin-right:10px;">120/80</span>
+                    <span id="span_pression" style="font-size:25px; margin-right:10px;">0/0</span> mmHg
                 </div>
 
                 <div class="state_health" style="margin-bottom: 20px;">
-                    <p style="background-color:#F3DBDC;">Normal</p>
+                    <p style="background-color:#F3DBDC;">...</p>
                 </div>
 
                 <div>
@@ -282,16 +367,27 @@
         </section>
 
         <div class="header_secton_vs" style="margin-top:40px;">
-            <h3>Visualisation en temps réel</h3> 
+                <h3>Visualisation en temps réel</h3> 
 
-            <div>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10.0001 6L8.59009 7.41L13.1701 12L8.59009 16.59L10.0001 18L16.0001 12L10.0001 6Z" fill="black"/>
-                </svg>
-            </div>
+                <div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.0001 6L8.59009 7.41L13.1701 12L8.59009 16.59L10.0001 18L16.0001 12L10.0001 6Z" fill="black"/>
+                    </svg>
+                </div>
+
+            <!-- <form method="POST" action="../Controllers/c_graphique.php" enctype="multipart/form-data"> -->
+            <form method="POST" action="" enctype="multipart/form-data">
+                <select class="champ_select_filter">
+                    <option>Filtre en fonction des dates</option>
+                    <option>2024-04-1 au 2024-04-12</option>
+                </select>
+
+                <input class="btn_submit_filter" type="submit" value="valider">
+            </form>
         </div> 
         <hr style="width: 200px;">
+
+        <div id="chart_div" style="width: 100%; height: 500px;"></div>
     </section>
-    
 </body>
 </html>

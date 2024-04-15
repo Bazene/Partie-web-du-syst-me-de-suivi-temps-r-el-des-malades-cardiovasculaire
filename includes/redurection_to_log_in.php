@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if(!$_SESSION['connected']) {
-        header("Location:./v_authentification.php");
+    if(empty($_SESSION['connected'])) {
+        header("Location:./authentification.php");
     }
 ?>

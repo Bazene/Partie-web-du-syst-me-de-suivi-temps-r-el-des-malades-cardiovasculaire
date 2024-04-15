@@ -3,15 +3,6 @@
     margin-left: 17%;
 }
 
-.section_patient_vitalSign > h2 {
-    width: 200px;
-    margin: 20px;
-    font-size: 16px;
-    background-color: #D7E5FF;
-    color: #1F57EC;
-    padding: 10px;
-}
-
 .section_header_suivi {
     margin: 20px;
     margin-bottom: 20px;
@@ -20,17 +11,87 @@
     justify-content: flex-start;
 }
 
-.other_patient_attributs {
-    width: 730px;
+.section_dashbord_suivi {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
-    background-color:#D7E5FF;
-    height: 150px;
+}
+
+.section_dashbord_suivi > h2 {
+    width: 195px;
+    margin: 20px;
+    font-size: 16px;
+    background-color: #D7E5FF;
+    color: #1F57EC;
+    padding: 10px;
+}
+
+.btn_archived {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 50px;
+    height: 18px;
+    background-color:#B987AD;
+    margin-top: 20px;
     margin-left: 20px;
+    color:white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+/* .btn_add_tuteur {
+    width: 90px;
+    height: 18px; 
+    margin-top: 20px;
+    margin-left: 10px;   
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #8CC5CA;
+    
+} */
+
+.btn_add_tuteur {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-top: 25px;
+    margin-left: 30px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.btn_rapport {
+    width: 45px;
+    height: 18px;
+    /* background-color:#8CC5CA; */
+    background-color: rgba(128, 128, 128, 20%);
+    margin-top: 20px;
+    margin-left: 10px;
+    color:white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    cursor : no-drop;
+}
+
+.other_patient_attributs {
+    width: 710px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color:#D7E5FF;
+    height: 200px;
+    margin-left: 20px;
+    padding-left: 20px; padding-top: 10px; padding-bottom: 10px;
     margin-bottom: 40px;
     border-radius: 15px;
+    border: solid 1px #1F57EC;
 }
 
 .attributs_patient {
@@ -79,6 +140,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    justify-content: center;
     color:white;
     background-color:#1F57EC;
     padding: 5px;
@@ -151,4 +213,134 @@
 
 .section_patient_vitalSign > h3 {
     margin-top: 40px;
+}
+
+
+/* FRAME CREATION PART */
+
+.frame_creation {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    width: 83%;
+    height: 100vh;
+    /* height: unset; */
+    /* margin-top: -117px; */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.sectionCreation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.sectionCreation > form {
+    width: 60%;
+    border-color: #243AFF ;
+    background-color: white;
+    padding-bottom: 2%;
+    border-radius: 10px;
+}
+
+.headerForm {
+    padding: 20px;
+    background:#1F57EC;
+    text-align: center;
+    margin-bottom: 30px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.headerForm > h1 {
+    color: white;
+}
+
+.divInputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.divInputsI, .divInputsII {
+    width: 40%;   
+}
+
+.champEntree {
+    width : 90%;
+    padding: 15px 20px 15px 20px;
+    margin-bottom : 10px;
+    border-radius: 20px;
+    border: solid 1px gray;
+}
+
+.champSelect {
+    width: 105%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 15px 20px 15px 20px;
+    margin-bottom: 10px;
+    border: solid 1px gray;
+}
+
+.divCancel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 3%;
+}
+
+.btnCancel {
+    font-size: 13px;
+    background-color: #D71313;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.btnSubmit {
+    display: block;
+    padding : 10px ;
+    background:#1F57EC;
+    color : white ;
+    border:0px ;
+    cursor:pointer;
+    margin-left: 5%;
+    border-radius: 10px;
+}
+
+.no_result_classe {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position : absolute;
+    width: 65%;
+    padding: 10px;
+    margin-left: 25px; margin-bottom: 20px;
+    background-color: rgba(185, 135, 173, 30%);
+    border: solid 1px #B987AD;
+    border-radius: 10px;
+}
+
+.no_tuteur_classe {
+    display: none;
+}
+
+.btn_submit_filter {
+    border:0px; 
+    background-color: #B987AD; 
+    color:white; 
+    cursor:pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.champ_select_filter {
+    padding: 8px;
+    border-radius: 5px;
 }

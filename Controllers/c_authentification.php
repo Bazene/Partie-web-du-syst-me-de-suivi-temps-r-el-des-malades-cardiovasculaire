@@ -17,20 +17,21 @@ $authentification_result_tuteur = Tuteur :: authentification($user_name, $passwo
 if($authentification_result_admin) {
     unset($_SESSION['erreurs_aut']);
     $_SESSION['connected'] = "admin";
-    header("Location:../Views/home.php");
+    header("Location:../Views/homeAdmin.php");
 } 
 
-elseif($authentification_result_doctor) {
+elseif($authentification_result_doctor !==  null) {
     unset($_SESSION['erreurs_aut']);
     $_SESSION['connected'] = "doctor";
+    $_SESSION['idDoctor'] = $authentification_result_doctor;
     header("Location:../Views/home.php");
-
 } 
 
-elseif($authentification_result_tuteur) {
+elseif($authentification_result_tuteur !== null) {
     unset($_SESSION['erreurs_aut']);
     $_SESSION['connected'] = "tuteur";
-    header("Location:../Views/home.php");
+    $_SESSION['id_patient_for_tuteur'] = $authentification_result_tuteur;
+    header("Location:../Views/suiviForTuteur.php");
 }
 
 else {
