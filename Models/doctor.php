@@ -55,7 +55,7 @@ class Doctor {
     }
 
      // AUTHENTIFICATION FONCTION FOR A DONCTER
-     static function authentification($DOCTOR_NAME, $DOCTOR_PASSWORD) {
+    static function authentification($DOCTOR_NAME, $DOCTOR_PASSWORD) {
         global $db;
 
         $query = 'SELECT * FROM doctor WHERE doctor_name = :doctor_name AND doctor_password = :doctor_password';

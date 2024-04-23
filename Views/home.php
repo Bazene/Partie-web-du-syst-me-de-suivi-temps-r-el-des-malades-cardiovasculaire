@@ -8,7 +8,6 @@
     <title>Accueil</title>
 
     <?php include_once "../includes/links.php" ;?>
-
     <link rel="stylesheet" href="../Styles/home_style.css">
 </head>
 

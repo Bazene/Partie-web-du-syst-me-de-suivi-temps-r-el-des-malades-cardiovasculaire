@@ -4,12 +4,13 @@
 }
 
 .header_notification {
-    margin: 10px 20px 50px 20px;
-    padding : 10px 0px 10px 0px;
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+    padding : 10px 20px 10px 20px;
+    /* background-color: #1F57EC; */
 }
 
 .header_notification > h2 {
-    position: fixed;
     width: 100px;
     font-size: 16px;
     background-color: #D7E5FF;
@@ -47,12 +48,31 @@
     border-radius: 5px;
     cursor: pointer;
     margin-right: 5px; 
-    width:50px; 
+    /* width:50px;  */
     background-color:#1F57EC;
     color: white;
     border: 0px;
 }
 
+
+.btn_follow1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px; 
+    width:30px; 
+    background-color:#1F57EC;
+    color: white;
+    border: 0px;
+    background-image: url("../icones/icone_suivi.svg");
+    background-repeat: no-repeat; /* Ne pas répéter l'icône */
+    background-position:center; /* Position de l'icône */
+    text-indent: -9999px; /* Cache le texte du bouton */
+}
 .btn_delete_notification {
     display: flex;
     flex-direction: row;

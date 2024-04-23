@@ -13,22 +13,24 @@
                     const span_glycemie = document.getElementById('span_glycemie');
                     const span_pression = document.getElementById('span_pression');
 
-                    const size_all = (allVitalSigns.length) - 1 ;
-                    var vitalSign = allVitalSigns[size_all];
-                    
-                    var heart_rate = vitalSign.heart_rate; 
-                    var spo2 = vitalSign.oxygen_level;
-                    var temp = vitalSign.temperature;
-                    var temperature = Math.round(temp* 10) / 10;
-                    var blood_glucose = vitalSign.blood_glucose;
-                    var systolic_blood = vitalSign.systolic_blood;
-                    var diastolic_blood = vitalSign.diastolic_blood;
+                    if(allVitalSigns.length !== 0) {
+                        const size_all = (allVitalSigns.length) - 1 ;
+                        var vitalSign = allVitalSigns[size_all];
+                        
+                        var heart_rate = vitalSign.heart_rate; 
+                        var spo2 = vitalSign.oxygen_level;
+                        var temp = vitalSign.temperature;
+                        var temperature = Math.round(temp* 10) / 10;
+                        var blood_glucose = vitalSign.blood_glucose;
+                        var systolic_blood = vitalSign.systolic_blood;
+                        var diastolic_blood = vitalSign.diastolic_blood;
 
-                    span_heart_rate.innerHTML = heart_rate;    
-                    span_spo2.innerHTML = spo2;
-                    span_temperature.innerHTML = temperature;   
-                    span_glycemie.innerHTML = blood_glucose;    
-                    span_pression.innerHTML = systolic_blood+"/"+diastolic_blood;  
+                        span_heart_rate.innerHTML = heart_rate;    
+                        span_spo2.innerHTML = spo2;
+                        span_temperature.innerHTML = temperature;   
+                        span_glycemie.innerHTML = blood_glucose;    
+                        span_pression.innerHTML = systolic_blood+"/"+diastolic_blood;  
+                    }
                 } else {
                     console.error('Erreur lors de la récupération des données:', xhr.status);
                 }

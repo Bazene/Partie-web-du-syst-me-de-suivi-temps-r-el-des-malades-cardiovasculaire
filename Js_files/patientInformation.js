@@ -78,5 +78,4 @@ function fetchDataPatient() {
 }
 
 fetchDataPatient(); // Appeler fetchDataAndDisplay() initialement
-
 setInterval(fetchDataPatient, 5000); // Actualiser les données toutes les 5 secondes

@@ -165,3 +165,92 @@
 .section_patient_vitalSign > h3 {
     margin-top: 40px;
 }
+
+.formulaireFilter {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.formulaireFilter > input {
+    margin-right: 20px;
+}
+
+.formulaireFilter > p {
+    margin-right: 5px;
+}
+
+.btn_submit_filter {
+    border:0px; 
+    background-color: #B987AD; 
+    color:white; 
+    cursor:pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.date_filtre1 {
+    padding: 9px;
+    border-radius: 5px;
+    border: solid 1px gray;
+}
+
+.date_filtre2 {
+    padding: 9px;
+    border-radius: 5px;
+    border: solid 1px gray;
+}
+
+.btn_realtime {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #1F57EC;
+    padding: 11px;
+    border-radius: 5px;
+    color:white;
+    cursor: pointer;
+}
+
+/* Exemple de styles CSS personnalisés pour le DatePicker */
+.ui-datepicker {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    width: 250px;
+}
+
+.ui-datepicker-header {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.ui-datepicker-title {
+    font-weight: bold;
+}
+
+.ui-datepicker-calendar {
+    width: 100%;
+}
+
+.ui-datepicker-calendar .ui-state-default {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.ui-datepicker-calendar .ui-state-hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.ui-datepicker-calendar .ui-state-active {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.ui-datepicker-calendar .ui-datepicker-unselectable {
+    color: #cccccc;
+}

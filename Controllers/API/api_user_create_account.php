@@ -2,6 +2,7 @@
     include_once "../../Configuration/config.php";
     include_once "../../Models/patient.php";
     include_once "../../Models/doctor.php";
+    include_once "../Models/limitesvitalsignspatient.php";
 
     header("Content-Type: application/json");    
 
@@ -45,25 +46,30 @@
                 if($new_patient->createPatient()) {
                     // recupération de l'id du patient
                     $patientId = $new_patient->getIdPatient($new_patient);
-
+                    
                     if($patientId != null ) {
-                        // Création de l'objet JSON à retourner
-                        $responseData = array(
-                            'patient_name' => $patient_name,
-                            'patient_postname'=> $patient_postname, 
-                            'patient_surname' => $patient_surname,
-                            'patient_gender' => $patient_gender,
-                            'patient_phone_number' => $patient_phone_number,
-                            'patient_mail' => $patient_mail,
-                            'patient_password' => $hashedPassword, 
-                            'patient_date_created' => $patient_date_created, 
-                            'patient_age' => $patient_age, 
-                            'patient_role' => $patient_role,
-                            'patient_id' => $patientId,
-                            'success' => true
-                        );
+                        // we initialise the limite values of patient vital signs
+                        $limitesVital = new Limitesvitalsignspatient($patientId, 36, 38, 90, 100, 50, 100, "108/75", "126/83", 70, 110);
+                        
+                        if($limitesVital->createLimitesVitalSign()) {
+                            // Création de l'objet JSON à retourner
+                            $responseData = array(
+                                'patient_name' => $patient_name,
+                                'patient_postname'=> $patient_postname, 
+                                'patient_surname' => $patient_surname,
+                                'patient_gender' => $patient_gender,
+                                'patient_phone_number' => $patient_phone_number,
+                                'patient_mail' => $patient_mail,
+                                'patient_password' => $hashedPassword, 
+                                'patient_date_created' => $patient_date_created, 
+                                'patient_age' => $patient_age, 
+                                'patient_role' => $patient_role,
+                                'patient_id' => $patientId,
+                                'success' => true
+                            );
 
-                        echo json_encode($responseData);
+                            echo json_encode($responseData);
+                        }
                     }
                 } 
                 

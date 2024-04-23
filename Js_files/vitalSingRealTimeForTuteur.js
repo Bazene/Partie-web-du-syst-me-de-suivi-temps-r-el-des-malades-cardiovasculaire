@@ -70,11 +70,15 @@ function fetchDataVitalSign() {
                 }
 
                 // for pression
-                if((systolic_blood <= 140 && systolic_blood >= 90) && (diastolic_blood <=90 && diastolic_blood >= 60)) {
+                if((systolic_blood <= 126 && systolic_blood >= 108) && (diastolic_blood <= 83 && diastolic_blood >= 75)) {
                     state_pression.innerHTML = "Normale" ;                   
-                } else if(systolic_blood < 90 && diastolic_blood < 60) {
+                } else if(systolic_blood < 108 && diastolic_blood < 75) {
                     state_pression.innerHTML = "Faible";
-                } else if(systolic_blood > 140 && diastolic_blood > 90) {
+                } else if(systolic_blood < 108 || diastolic_blood < 75) {
+                    state_pression.innerHTML = "Faible";
+                } else if(systolic_blood > 126 && diastolic_blood > 83) {
+                    state_pression.innerHTML = "Elevé";
+                } else if(systolic_blood > 126 || diastolic_blood > 83) {
                     state_pression.innerHTML = "Elevé";
                 }
 
@@ -94,5 +98,4 @@ function fetchDataVitalSign() {
 }
 
 fetchDataVitalSign(); // Appeler fetchDataAndDisplay() initialement
-
 setInterval(fetchDataVitalSign, 5000); // Actualiser les données toutes les 5 secondes (par exemple)

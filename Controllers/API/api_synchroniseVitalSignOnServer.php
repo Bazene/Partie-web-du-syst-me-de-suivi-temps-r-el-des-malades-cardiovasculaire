@@ -1,7 +1,10 @@
 <?php
-
     include_once "../../Configuration/config.php";
     include_once "../../Models/VitalSigns.php";
+
+    include_once "../../Models/notifications.php";
+    include_once "../../Models/limitesvitalsignspatient.php";
+    include_once "../../Models/NotificationSender.php";
 
     header("Content-Type: application/json");    
 
@@ -11,10 +14,10 @@
 
         // Traiter les données (insérer dans la base de données, etc.)
         try {
-
             $identifiants = [];
+
             foreach ($listVitalSigns as $vitalSign) {
-                $id = $vitalSign['id'];
+                $id_local = $vitalSign['id_local'];
                 $id_patient = $vitalSign['id_patient'];
                 $temperature = $vitalSign['temperature'];
                 $heart_rate = $vitalSign['heart_rate'];
@@ -26,55 +29,84 @@
                 $vital_date = $vitalSign['vital_date'];
                 $sync_vitalSign = "synchronise";
     
-                $new_VitalSign = new VitalSigns($id, $id_patient, $temperature, $heart_rate, $oxygen_level, $blood_glucose, $systolic_blood, $diastolic_blood, $vital_hour, $vital_date, $sync_vitalSign);
+                $new_VitalSign = new VitalSigns($id_local, $id_patient, $temperature, $heart_rate, $oxygen_level, $blood_glucose, $systolic_blood, $diastolic_blood, $vital_hour, $vital_date, $sync_vitalSign);
                 
+                $limitesValues = Limitesvitalsignspatient::getLimitesForPatient($id_patient);
+                $min_systol_diastol = explode('/', $limitesValues->getMin_pression());
+                $max_systol_diastol = explode('/',$limitesValues->getMax_pression());
+
                 if($new_VitalSign->isInTable()) {
                     if($new_VitalSign->updateVitalSign()) {
-                        array_push($identifiants, $id);
+                        array_push($identifiants, $id_local);                        
+                    
+                        // for mail
+                        $notificationMail = new NotificationSender(); 
+                    
+                        if($temperature > $limitesValues->getMax_temp() || $temperature < $limitesValues->getMin_temp()) {
+                            $message = "Temperature : ".$temperature." *C";
+                            $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
+                            if($new_notification->createNotification()) {
+                                $notificationMail->sendNotification("Température", $temperature, $vital_hour, $vital_date, "bazenesergeamos0@gmail.com");
+                            }
+                        }
                     }
                 } else {
                     if($new_VitalSign->createVitalSign()) {
-                        array_push($identifiants, $id);
+                        array_push($identifiants, $id_local);
+                    
+                        // for mail
+                        $notificationMail = new NotificationSender(); 
+                    
+                        if($temperature > $limitesValues->getMax_temp() || $temperature < $limitesValues->getMin_temp()) {
+                            $message = "Temperature : ".$temperature." *C";
+                            $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
+                            if($new_notification->createNotification()) {
+                                $notificationMail->sendNotification("Température", $temperature, $vital_hour, $vital_date, "bazenesergeamos0@gmail.com");
+                            }
+                        }
                     }
                 }
             }
 
             if(!empty($identifiants)) {
-                // check if we can create or not a notification
-                if ($temperature > 40.0 || $temperature < 30.0) {
-                    $message = "Temperature : ".$temperature." *C";
-                    $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                    if($new_notification->createNotification()) echo "notification creee";
-                    else echo "Nooooooooooooooo";
-                }
-
-                if($heart_rate > 120 || $heart_rate < 40)  {
-                    $message = "Frequence cardiaque : ".$heart_rate." BPM";
-                    $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                    if($new_notification->createNotification()) echo "notification creee";
-                    else echo "Nooooooooooooooo";
-                }
-
-                if($oxygen_level < 80)  {
-                    $message = "Niveau d'oxygene : ".$oxygen_level." %";
-                    $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                    if($new_notification->createNotification()) echo "notification creee";
-                    else echo "Nooooooooooooooo";              
-                }
-
-                if($blood_glucose >= 400 || $blood_glucose <= 70) {
-                    $message = "Glycémie : ".$blood_glucose." mg/dL";
-                    $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                    if($new_notification->createNotification()) echo "notification creee";
-                    else echo "Nooooooooooooooo";         
-                }
-
-                if(($systolic_blood >= 160 && $diastolic_blood >= 120) || ($systolic_blood <= 80 && $diastolic_blood <= 50)) {
-                    $message = "Tension artérielle : ".$systolic_blood." / ".$diastolic_blood." mmHg";
-                    $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                    if($new_notification->createNotification()) echo "notification creee";
-                    else echo "Nooooooooooooooo";        
-                }
+                
+            
+                // if($heart_rate > $limitesValues->getMax_heartRate() || $heart_rate < $limitesValues->getMin_heartRate())  {
+                //     $message = "Frequence cardiaque : ".$heart_rate." BPM";
+                //     $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
+                //     if($new_notification->createNotification()) {
+            
+                //     }
+                    
+                // }
+            
+                // if($oxygen_level < $limitesValues->getMin_spo2() || $oxygen_level > $limitesValues->getMax_spo2())  {
+                //     $message = "Niveau d'oxygene : ".$oxygen_level." %";
+                //     $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
+                //     if($new_notification->createNotification()) {
+            
+                //     }      
+                // }
+            
+                // if($blood_glucose !== 0) {
+                //     if($blood_glucose >= $limitesValues->getMax_glucose() || $blood_glucose <= $limitesValues->getMin_glucose()) {
+                //         $message = "Glycémie : ".$blood_glucose." mg/dL";
+                //         $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
+                //         if($new_notification->createNotification()) {
+            
+                //         }
+                //     }
+                // }
+            
+                // if(($systolic_blood !== 0) && ($diastolic_blood !== 0)) {
+                //     if(($systolic_blood >= intval($max_systol_diastol[0]) && $diastolic_blood >= intval($max_systol_diastol[1])) || ($systolic_blood <= intval($min_systol_diastol[0]) && $diastolic_blood <= intval($min_systol_diastol[1]))) {
+                //         $message = "Tension artérielle : ".$systolic_blood." / ".$diastolic_blood." mmHg";
+                //         $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
+                //         if($new_notification->createNotification()) {
+            
+                //         }
+                //     }
+                // }
 
                 // data that will be returned to the client
                 $responseData = array(

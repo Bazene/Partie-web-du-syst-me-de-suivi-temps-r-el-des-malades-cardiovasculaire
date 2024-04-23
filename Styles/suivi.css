@@ -38,45 +38,50 @@
     color:white;
     padding: 10px;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 5px;
 }
-
-/* .btn_add_tuteur {
-    width: 90px;
-    height: 18px; 
-    margin-top: 20px;
-    margin-left: 10px;   
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 2px;
-    background-color: #8CC5CA;
-    
-} */
 
 .btn_add_tuteur {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 30px;
-    height: 30px;
-    margin-top: 25px;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    margin-top: 20px;
     margin-left: 30px;
     border-radius: 100%;
     cursor: pointer;
 }
 
-.btn_rapport {
-    width: 45px;
-    height: 18px;
-    /* background-color:#8CC5CA; */
-    background-color: rgba(128, 128, 128, 20%);
-    margin-top: 20px;
-    margin-left: 10px;
-    color:white;
+.btn_editNotification {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 10px;
+    width: 20px;
+    height: 20px;
+    margin-top: 20px;
+    margin-left: 30px;
+    border-radius: 100%;
     cursor: pointer;
-    border-radius: 2px;
-    cursor : no-drop;
+    background-color: #1F57EC;
+}
+
+.div_message {
+    display: none;
+    position: absolute;
+    z-index: 5;
+    margin-top: 20px;
+    margin-left: 50px;
+    background-color: rgba(31, 87, 236, 30%);
+    border: solid 1px #1F57EC;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn_editNotification:hover > .div_message {
+    display: inline-block;
 }
 
 .other_patient_attributs {
@@ -166,6 +171,18 @@
     border: 0px;
 }
 
+.btn_realtime {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #1F57EC;
+    padding: 11px;
+    border-radius: 5px;
+    color:white;
+    cursor: pointer;
+}
+
 .vitalSign_grid {
     display: grid;
     grid-template-columns: repeat(auto-fill,  minmax(100px, 180px));
@@ -229,6 +246,17 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.frame_creation2 {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    width: 83%;
+    height: 100vh;
+    /* height: unset; */
+    /* margin-top: -117px; */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .sectionCreation {
     display: flex;
     flex-direction: column;
@@ -271,7 +299,6 @@
 .champEntree {
     width : 90%;
     padding: 15px 20px 15px 20px;
-    margin-bottom : 10px;
     border-radius: 20px;
     border: solid 1px gray;
 }
@@ -294,6 +321,16 @@
 }
 
 .btnCancel {
+    font-size: 13px;
+    background-color: #D71313;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.btnCancel2 {
     font-size: 13px;
     background-color: #D71313;
     border: 0;
@@ -331,6 +368,23 @@
     display: none;
 }
 
+.formulaireFilter {
+    margin-left: 135px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.formulaireFilter > input {
+    margin-right: 20px;
+}
+
+.formulaireFilter > p {
+    margin-right: 5px;
+}
+
 .btn_submit_filter {
     border:0px; 
     background-color: #B987AD; 
@@ -340,7 +394,53 @@
     border-radius: 5px;
 }
 
-.champ_select_filter {
-    padding: 8px;
+.date_filtre1 {
+    padding: 9px;
     border-radius: 5px;
+    border: solid 1px gray;
+}
+
+.date_filtre2 {
+    padding: 9px;
+    border-radius: 5px;
+    border: solid 1px gray;
+}
+
+/* Exemple de styles CSS personnalisés pour le DatePicker */
+.ui-datepicker {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    width: 250px;
+}
+
+.ui-datepicker-header {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.ui-datepicker-title {
+    font-weight: bold;
+}
+
+.ui-datepicker-calendar {
+    width: 100%;
+}
+
+.ui-datepicker-calendar .ui-state-default {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.ui-datepicker-calendar .ui-state-hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.ui-datepicker-calendar .ui-state-active {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.ui-datepicker-calendar .ui-datepicker-unselectable {
+    color: #cccccc;
 }

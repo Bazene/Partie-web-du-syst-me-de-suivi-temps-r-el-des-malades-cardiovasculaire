@@ -129,9 +129,7 @@ class Patient {
 
                 array_push($patients, $patient);
             } 
-
             return $patients;
-
         } else return [];
     }
 

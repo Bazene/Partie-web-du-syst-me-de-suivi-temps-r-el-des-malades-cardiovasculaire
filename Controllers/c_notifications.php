@@ -5,7 +5,6 @@
     include_once "../Models/notifications.php";
 
     $user_connected = $_SESSION['connected'] ;
-    
 
     if($user_connected === "doctor") {
         $ID_DOCTOR = $_SESSION['idDoctor'];
@@ -27,7 +26,7 @@
 
         echo json_encode($JsonArray);
 
-    } elseif ($user_connected === "tuteur") {
+    } else if ($user_connected === "tuteur") {
         $ID_PATIENT = $_SESSION['id_patient_for_tuteur'];
         $notifications = Notifications :: getNotificationsForTuteur($ID_PATIENT);
 

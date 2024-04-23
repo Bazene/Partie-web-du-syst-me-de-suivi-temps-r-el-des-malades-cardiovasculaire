@@ -13,12 +13,20 @@
 
     <script src="../Js_files/patientInformation.js" defer></script>
     <script src="../Js_files/vitalSingRealTime.js" defer></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="../Js_files/unsetSessionFilter.js" defer></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js" defer></script>
     <script type="text/javascript" src="../Js_files/graphique.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script> <!-- Inclure jQuery -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" defer></script> <!-- Inclure jQuery UI -->
+    <script type="text/javascript" src="../Js_files/datesVitalSigns.js" defer></script>
+
+    <!-- Inclure jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <body>
     <?php include_once "../includes/nav_bar.php"; ?>
+    <?php  include_once "../Controllers/getLimitesValuesForPatient.php"; ?>
 
     <section class="section_patient_vitalSign">
         <section class="frame_creation">
@@ -65,7 +73,66 @@
                         <button type="button" class="btnCancel">Annuler</button>
                         <input type="submit" class="btnSubmit" value="Enregistrer"/> <br>
                     </div>
-                    
+                </form>
+            </section>      
+        </section>
+
+        <section class="frame_creation2">
+            <section class="sectionCreation">
+                <form method="POST" action="../Controllers/c_changeNotificationLimites.php" enctype="multipart/form-data">
+                    <div class="headerForm">
+                        <h1>MODIFIER LES VALEURS QUI DECLENCHE LES NOTIFICATIONS POUR CE PATIENT</h1>
+                    </div>
+
+                    <!-- <div class = "affichageErreur">
+                        <p>Salut</p>
+                    </div> --> 
+                
+                    <div class="divInputs">
+                        <?php 
+                        $id_patient = $_SESSION['id_patient_for_vitalSign'] ;
+                        $limitesValues = getLimitesValuesForPatient($id_patient);
+
+                        $min_systol_diastol = explode('/', $limitesValues->getMin_pression());
+                        $max_systol_diastol = explode('/',$limitesValues->getMax_pression());
+
+                        echo '
+                            <div class="divInputsI">
+                                <label style="margin-left: 20px;">Température</label>
+                                <input type="number" min="0" step="0.5" name="min_temp" style="margin-top: 5px;" placeholder="Température min" class="champEntree" value = "'.$limitesValues->getMin_temp().'" required/> <br><br>
+                                <input type="number" min="0" step="0.5" name="max_temp" placeholder="Température max" class="champEntree" value = "'.$limitesValues->getMax_temp().'" required/> <br><br><br>
+
+                                <label style="margin-left: 20px;">Saturation pulsée en oxygène</label>
+                                <input type="number" min="0" step="1" name="min_spo2" style="margin-top: 5px;" placeholder="SpO2 min" class="champEntree" value = "'.$limitesValues->getMin_spo2().'" required/> <br><br>
+                                <input type="number" min="0" step="1" name="max_spo2" placeholder="SpO2 max" class="champEntree" value = "'.$limitesValues->getMax_spo2().'" required/> <br><br><br>
+
+                                <label style="margin-left: 20px;">Fréquence cardiaque</label>
+                                <input type="number" min="0" step="1" name="min_heartRate" style="margin-top: 5px;" placeholder="Fréquence min" class="champEntree" value = "'.$limitesValues->getMin_heartRate().'" required/> <br><br>
+                                <input type="number" min="0" step="1" name="max_heartRate" placeholder="Fréquence max" class="champEntree" value = "'.$limitesValues->getMax_heartRate().'" required/> <br><br>
+                            </div>
+
+                            <div class="divInputsII">
+                                <label style="margin-left: 20px;">Pression systolique</label>
+                                <input type="number" min="0" step="1" name="min_systol" style="margin-top: 5px;" placeholder="Systol min" class="champEntree" value="'.intval($min_systol_diastol[0]).'" required/> <br><br>
+                                <input type="number" min="0" step="1" name="max_systol" placeholder="Systol max" class="champEntree" value="'.intval($max_systol_diastol[0]).'" required/> <br><br><br>
+
+                                <label style="margin-left: 20px;">Pression diastolique</label>
+                                <input type="number" min="0" step="1" name="min_diastol" style="margin-top: 5px;" placeholder="Diastol min" class="champEntree" value="'.intval($min_systol_diastol[1]).'" required/> <br><br>
+                                <input type="number" min="0" step="1" name="max_diastol" placeholder="Diastol max" class="champEntree" value="'.intval($max_systol_diastol[1]).'" required/> <br><br><br>
+
+                                <label style="margin-left: 20px;">Glycémie</label>
+                                <input type="number" min="0" step="1" name="min_glucose" style="margin-top: 5px;" placeholder="Glycémie min" class="champEntree" value = "'.$limitesValues->getMin_glucose().'" required/> <br><br>
+                                <input type="number" min="0" step="1" name="max_glucose" placeholder="Glycémie max" class="champEntree" value = "'.$limitesValues->getMax_glucose().'" required/> <br><br>
+                                
+                                <input type = "hidden" name="id_patient" value = "'.$id_patient.'">
+                            </div> ';
+                        ?>
+                    </div>
+                
+                    <div class="divCancel"> 
+                        <button type="button" class="btnCancel2">Annuler</button>
+                        <input type="submit" class="btnSubmit" value="Enregistrer"/> <br>
+                    </div>
                 </form>
             </section>      
         </section>
@@ -92,9 +159,15 @@
                 </svg>
             </div>
 
-            <!-- <div class="btn_rapport">
-                rapport
-            </div> -->
+            <div class="btn_editNotification">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C20.8027 6.94749 20.8763 6.8376 20.9264 6.71663C20.9766 6.59565 21.0024 6.46597 21.0024 6.335C21.0024 6.20403 20.9766 6.07435 20.9264 5.95338C20.8763 5.83241 20.8027 5.72252 20.71 5.63L18.37 3.29C18.2775 3.1973 18.1676 3.12375 18.0466 3.07357C17.9257 3.02339 17.796 2.99756 17.665 2.99756C17.534 2.99756 17.4043 3.02339 17.2834 3.07357C17.1624 3.12375 17.0525 3.1973 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="white"/>
+                </svg>
+
+                <p class="div_message">
+                    Modifier les valeurs limites des notifications pour ce patient
+                </p>
+            </div>
         </section>
 
         <section class="section_header_suivi">
@@ -114,17 +187,13 @@
             </div>
 
             <div class="btn_see_more">
-                <div class="btn_see_more_cash">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.0001 6L8.59009 7.41L13.1701 12L8.59009 16.59L10.0001 18L16.0001 12L10.0001 6Z" fill="white"/>
-                    </svg>
-                </div>
-
-                <div class="btn_see_more_show">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.70992 9.29001C6.61722 9.38253 6.54367 9.49242 6.49349 9.61339C6.44331 9.73436 6.41748 9.86405 6.41748 9.99501C6.41748 10.126 6.44331 10.2557 6.49349 10.3766C6.54367 10.4976 6.61722 10.6075 6.70992 10.7L11.2999 15.29C11.3924 15.3827 11.5023 15.4563 11.6233 15.5064C11.7443 15.5566 11.874 15.5825 12.0049 15.5825C12.1359 15.5825 12.2656 15.5566 12.3865 15.5064C12.5075 15.4563 12.6174 15.3827 12.7099 15.29L17.2999 10.7C17.3925 10.6074 17.4659 10.4975 17.5161 10.3766C17.5662 10.2556 17.5919 10.1259 17.5919 9.99501C17.5919 9.86408 17.5662 9.73444 17.5161 9.61347C17.4659 9.49251 17.3925 9.3826 17.2999 9.29001C17.2073 9.19743 17.0974 9.12399 16.9765 9.07389C16.8555 9.02378 16.7259 8.99799 16.5949 8.99799C16.464 8.99799 16.3343 9.02378 16.2134 9.07389C16.0924 9.12399 15.9825 9.19743 15.8899 9.29001L11.9999 13.17L8.11992 9.29001C7.72992 8.90001 7.08992 8.91001 6.70992 9.29001Z" fill="white"/>
-                    </svg>
-                </div>
+                <svg width="24" height="24" class="btn_see_more_cash" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.0001 6L8.59009 7.41L13.1701 12L8.59009 16.59L10.0001 18L16.0001 12L10.0001 6Z" fill="white"/>
+                </svg>
+                
+                <svg width="24" height="24" class="btn_see_more_show" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.70992 9.29001C6.61722 9.38253 6.54367 9.49242 6.49349 9.61339C6.44331 9.73436 6.41748 9.86405 6.41748 9.99501C6.41748 10.126 6.44331 10.2557 6.49349 10.3766C6.54367 10.4976 6.61722 10.6075 6.70992 10.7L11.2999 15.29C11.3924 15.3827 11.5023 15.4563 11.6233 15.5064C11.7443 15.5566 11.874 15.5825 12.0049 15.5825C12.1359 15.5825 12.2656 15.5566 12.3865 15.5064C12.5075 15.4563 12.6174 15.3827 12.7099 15.29L17.2999 10.7C17.3925 10.6074 17.4659 10.4975 17.5161 10.3766C17.5662 10.2556 17.5919 10.1259 17.5919 9.99501C17.5919 9.86408 17.5662 9.73444 17.5161 9.61347C17.4659 9.49251 17.3925 9.3826 17.2999 9.29001C17.2073 9.19743 17.0974 9.12399 16.9765 9.07389C16.8555 9.02378 16.7259 8.99799 16.5949 8.99799C16.464 8.99799 16.3343 9.02378 16.2134 9.07389C16.0924 9.12399 15.9825 9.19743 15.8899 9.29001L11.9999 13.17L8.11992 9.29001C7.72992 8.90001 7.08992 8.91001 6.70992 9.29001Z" fill="white"/>
+                </svg>
             </div>
         </section>
 
@@ -374,20 +443,37 @@
                         <path d="M10.0001 6L8.59009 7.41L13.1701 12L8.59009 16.59L10.0001 18L16.0001 12L10.0001 6Z" fill="black"/>
                     </svg>
                 </div>
-
-            <!-- <form method="POST" action="../Controllers/c_graphique.php" enctype="multipart/form-data"> -->
-            <form method="POST" action="" enctype="multipart/form-data">
-                <select class="champ_select_filter">
-                    <option>Filtre en fonction des dates</option>
-                    <option>2024-04-1 au 2024-04-12</option>
-                </select>
-
-                <input class="btn_submit_filter" type="submit" value="valider">
-            </form>
         </div> 
         <hr style="width: 200px;">
 
+        <!-- <form method="POST" class="formulaireFilter" action="../Controllers/c_graphique.php" enctype="multipart/form-data"> -->        
+        <form class="formulaireFilter">
+            <p>Du : </p>
+            <input type="text" class="date_filtre1" name="date_filtre1" value="aaaa-mm-jj">
+
+            <p>Au : </p>
+            <input type="text" class="date_filtre2" name="date_filtre2" value="aaaa-mm-jj" readonly required>
+
+            <!-- <input class="btn_submit_filter" type="submit" value="filtrer"> -->
+            <input class="btn_submit_filter" type="button" value="filtrer">
+
+            <div class="btn_realtime">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_289_37)">
+                    <path d="M2.6 5.6C3.5 3.5 5.6 2 8 2C11 2 13.4 4.2 13.9 7H15.9C15.4 3.1 12.1 0 8 0C5 0 2.4 1.6 1.1 4.1L0 3V7H4L2.6 5.6ZM16 9H11.9L13.4 10.4C12.5 12.5 10.4 14 7.9 14C5 14 2.5 11.8 2 9H0C0.5 12.9 3.9 16 7.9 16C10.9 16 13.5 14.3 14.9 11.9L16 13V9Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_289_37">
+                    <rect width="16" height="16" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+            </div>
+        </form>
+
         <div id="chart_div" style="width: 100%; height: 500px;"></div>
+        <div id="chart_spo2" style="width: 100%; height: 500px;"></div>
+        <div id="chart_temp" style="width: 100%; height: 500px;"></div>
     </section>
 </body>
 </html>

@@ -115,7 +115,7 @@ class Tuteur {
                 return $data['id_patient'];
             }
             return null;
-        }
+        } else return null;
     }
 
      // FUNCTION UPDATE PASSWORD

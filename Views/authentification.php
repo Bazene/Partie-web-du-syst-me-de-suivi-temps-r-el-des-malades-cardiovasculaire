@@ -15,7 +15,6 @@
     </head>
 
     <body>
-
         <?php
             if(!empty($_SESSION['erreurs_aut'])) {
                 $erreurs_aut = $_SESSION['erreurs_aut'];
@@ -37,14 +36,14 @@
                     <p style = "margin-bottom:20px;">connectez-vous à votre compte</p>
 
                     <form action="../Controllers/c_authentification.php" method="POST" enctype="multipart/form-data">
-                            <div class="inputs" style="display:flex; flex-direction:column;">
-                                <input type="text" name="user_name" placeholder="Nom d'utilisateur" required>
-                                <input type="password" name="password_key" placeholder="Mot de passe" required>
-                            </div>
+                        <div class="inputs" style="display:flex; flex-direction:column;">
+                            <input type="text" name="user_name" placeholder="Nom d'utilisateur" required>
+                            <input type="password" name="password_key" placeholder="Mot de passe" required>
+                        </div>
 
-                            <div class="inputs_submit">
-                                <input type="submit" class="login_btn" value="connexion">
-                            </div>
+                        <div class="inputs_submit">
+                            <input type="submit" class="login_btn" value="connexion">
+                        </div>
                     </form>
 
                     <a href="v_update_password.php"  style="text-decoration:none; color:#1F57EC;">Mot de passe oublier ?</a> 

@@ -10,8 +10,16 @@
     <?php include_once "../includes/links.php"; ?>
     <link rel="stylesheet" href="../Styles/suiviForTuteur.css" />
     <script src="../Js_files/suivi.js" defer></script>
+
     <script src="../Js_files/patientInformationForTuteur.js" defer></script>
     <script src="../Js_files/vitalSingRealTimeForTuteur.js" defer></script>    
+    <script src="../Js_files/unsetSessionFilterForTuteur.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script> <!-- Inclure jQuery -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" defer></script> <!-- Inclure jQuery UI -->
+    <script type="text/javascript" src="../Js_files/datesVitalSigns.js" defer></script>
+    
+    <!-- Inclure jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <body>
@@ -39,17 +47,13 @@
             </div>
 
             <div class="btn_see_more">
-                <div class="btn_see_more_cash">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.0001 6L8.59009 7.41L13.1701 12L8.59009 16.59L10.0001 18L16.0001 12L10.0001 6Z" fill="white"/>
-                    </svg>
-                </div>
-
-                <div class="btn_see_more_show">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.70992 9.29001C6.61722 9.38253 6.54367 9.49242 6.49349 9.61339C6.44331 9.73436 6.41748 9.86405 6.41748 9.99501C6.41748 10.126 6.44331 10.2557 6.49349 10.3766C6.54367 10.4976 6.61722 10.6075 6.70992 10.7L11.2999 15.29C11.3924 15.3827 11.5023 15.4563 11.6233 15.5064C11.7443 15.5566 11.874 15.5825 12.0049 15.5825C12.1359 15.5825 12.2656 15.5566 12.3865 15.5064C12.5075 15.4563 12.6174 15.3827 12.7099 15.29L17.2999 10.7C17.3925 10.6074 17.4659 10.4975 17.5161 10.3766C17.5662 10.2556 17.5919 10.1259 17.5919 9.99501C17.5919 9.86408 17.5662 9.73444 17.5161 9.61347C17.4659 9.49251 17.3925 9.3826 17.2999 9.29001C17.2073 9.19743 17.0974 9.12399 16.9765 9.07389C16.8555 9.02378 16.7259 8.99799 16.5949 8.99799C16.464 8.99799 16.3343 9.02378 16.2134 9.07389C16.0924 9.12399 15.9825 9.19743 15.8899 9.29001L11.9999 13.17L8.11992 9.29001C7.72992 8.90001 7.08992 8.91001 6.70992 9.29001Z" fill="white"/>
-                    </svg>
-                </div>
+                <svg width="24" height="24" class="btn_see_more_cash" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.0001 6L8.59009 7.41L13.1701 12L8.59009 16.59L10.0001 18L16.0001 12L10.0001 6Z" fill="white"/>
+                </svg>
+                
+                <svg width="24" height="24" class="btn_see_more_show" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.70992 9.29001C6.61722 9.38253 6.54367 9.49242 6.49349 9.61339C6.44331 9.73436 6.41748 9.86405 6.41748 9.99501C6.41748 10.126 6.44331 10.2557 6.49349 10.3766C6.54367 10.4976 6.61722 10.6075 6.70992 10.7L11.2999 15.29C11.3924 15.3827 11.5023 15.4563 11.6233 15.5064C11.7443 15.5566 11.874 15.5825 12.0049 15.5825C12.1359 15.5825 12.2656 15.5566 12.3865 15.5064C12.5075 15.4563 12.6174 15.3827 12.7099 15.29L17.2999 10.7C17.3925 10.6074 17.4659 10.4975 17.5161 10.3766C17.5662 10.2556 17.5919 10.1259 17.5919 9.99501C17.5919 9.86408 17.5662 9.73444 17.5161 9.61347C17.4659 9.49251 17.3925 9.3826 17.2999 9.29001C17.2073 9.19743 17.0974 9.12399 16.9765 9.07389C16.8555 9.02378 16.7259 8.99799 16.5949 8.99799C16.464 8.99799 16.3343 9.02378 16.2134 9.07389C16.0924 9.12399 15.9825 9.19743 15.8899 9.29001L11.9999 13.17L8.11992 9.29001C7.72992 8.90001 7.08992 8.91001 6.70992 9.29001Z" fill="white"/>
+                </svg>
             </div>
         </section>
 
@@ -98,6 +102,30 @@
                 </svg>
             </div>
         </div> <hr>
+
+        <form class="formulaireFilter">
+            <p>Du : </p>
+            <input type="text" class="date_filtre1" name="date_filtre1" value="aaaa-mm-jj">
+
+            <p>Au : </p>
+            <input type="text" class="date_filtre2" name="date_filtre2" value="aaaa-mm-jj" readonly required>
+
+            <!-- <input class="btn_submit_filter" type="submit" value="filtrer"> -->
+            <input class="btn_submit_filter" type="button" value="filtrer">
+
+            <div class="btn_realtime">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_289_37)">
+                    <path d="M2.6 5.6C3.5 3.5 5.6 2 8 2C11 2 13.4 4.2 13.9 7H15.9C15.4 3.1 12.1 0 8 0C5 0 2.4 1.6 1.1 4.1L0 3V7H4L2.6 5.6ZM16 9H11.9L13.4 10.4C12.5 12.5 10.4 14 7.9 14C5 14 2.5 11.8 2 9H0C0.5 12.9 3.9 16 7.9 16C10.9 16 13.5 14.3 14.9 11.9L16 13V9Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_289_37">
+                    <rect width="16" height="16" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+            </div>
+        </form>
 
         <section class="vitalSign_grid">
             <section class="view_vitalSign">

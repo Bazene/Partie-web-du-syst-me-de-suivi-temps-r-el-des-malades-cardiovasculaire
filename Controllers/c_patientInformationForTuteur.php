@@ -25,7 +25,6 @@
                 "doctorJ" => "no doctor found"
             );
         }
-       
     }   
 
     echo json_encode($resultJsonArray);

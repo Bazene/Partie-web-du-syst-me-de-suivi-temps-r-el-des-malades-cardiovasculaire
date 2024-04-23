@@ -4,18 +4,27 @@
     include_once "../Configuration/config.php";
     include_once "../Models/VitalSigns.php";
 
-    $jsonArray = array();
+    $jsonArray2 = array();
+    $jsonArrayResult = array();
+
     if(!empty($_SESSION['id_patient_for_tuteur'])) {
         $id_patient = $_SESSION['id_patient_for_tuteur'];
         $allVitalSings = VitalSigns :: getAllVitalSignsForPatient($id_patient);
         
-        
         if(!empty($allVitalSings)) {
 
             foreach ($allVitalSings as $vitalSign) {
-                $jsonArray[] = $vitalSign->objectToJson();
+                $jsonArray2[] = $vitalSign->objectToJson();
             }
         }     
     } 
 
-    echo json_encode($jsonArray);
+    // conditions that will be applied to choose the array wich will we 
+    if(isset($_SESSION['jsonArray1']) && !empty($_SESSION['jsonArray1'])) {
+        $jsonArrayResult = $_SESSION['jsonArray1'] ;
+    } else {
+        $jsonArrayResult = $jsonArray2;
+    }
+
+    echo json_encode($jsonArrayResult);
+?>
