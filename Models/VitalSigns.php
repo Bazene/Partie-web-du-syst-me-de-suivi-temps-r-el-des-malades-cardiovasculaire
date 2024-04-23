@@ -104,7 +104,7 @@ class VitalSigns {
         } else return null;
     }
 
-    public static function getAllVitalSigns() {
+    static function getAllVitalSigns() {
         global $db;
 
         $query = "SELECT * FROM vitalsigns ORDER BY id";
@@ -121,10 +121,10 @@ class VitalSigns {
         } else return null;
     }
 
-    public static function getAllVitalSignsForPatient($id_patient) {
+    static function getAllVitalSignsForPatient($id_patient) {
         global $db;
 
-        $query = "SELECT * FROM vitalsigns WHERE id_patient = :id_patient ORDER BY id DESC LIMIT 24";
+        $query = "SELECT * FROM vitalsigns WHERE id_patient = :id_patient ORDER BY id DESC LIMIT 5";
  
         $prepareQuery = $db->prepare($query);
         $execution = $prepareQuery->execute([
@@ -175,9 +175,8 @@ class VitalSigns {
         $datesVitalSigns = [];
         if($execution) {
             while($data = $prepareQuery->fetch()) {
-                $datesVitalSigns[] = $data['vital_date'];
+                array_push($datesVitalSigns, $data['vital_date']);
             }
-
             return $datesVitalSigns;
         } else return [];
     }

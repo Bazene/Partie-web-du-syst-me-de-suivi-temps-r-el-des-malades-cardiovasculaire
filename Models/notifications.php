@@ -75,7 +75,7 @@ class Notifications {
     static function getAllNotifications() {
         global $db;
 
-        $query = 'SELECT * FROM notifications ORDER BY notification_date DESC, notification_hour DESC';
+        $query = 'SELECT * FROM notifications ORDER BY id DESC';
         $prepare_query = $db->prepare($query);
         $execution = $prepare_query->execute([]);
 
@@ -85,9 +85,7 @@ class Notifications {
                 $notification = new Notifications($data['id_patient'], $data['notification_content'], $data['notification_date'], $data['notification_hour'], $data['active']);
                 array_push($notifications, $notification);
             }
-
             return $notifications;
-
         } else return $notifications;
     }
 
@@ -106,7 +104,7 @@ class Notifications {
     public function isANotificationForDocto($ID_DOCTOR) {
         global $db;
 
-        $query = 'SELECT id_doctor, id_doctor_archived FROM patient JOIN notifications ON notifications.id_patient = :id';
+        $query = 'SELECT patient.id_doctor, patient.id_doctor_archived FROM patient JOIN notifications ON notifications.id_patient = :id';
         $prepare_query = $db->prepare($query);
         $execution = $prepare_query->execute([
             ':id' => $this->id_patient

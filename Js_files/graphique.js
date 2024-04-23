@@ -157,7 +157,6 @@ function drawChart() {
             alert('Erreur lors du chargement des signes vitaux');
         };
 
-
         // Envoyer la requête au serveur pour récupérer les données JSON
         xhr.open('GET', '../Controllers/c_graphique.php', true); // Ouvrir une connexion en spécifiant la méthode HTTP et l'URL du contrôleur
         xhr.send();
