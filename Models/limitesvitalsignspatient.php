@@ -29,10 +29,10 @@ class Limitesvitalsignspatient {
 
     public function createLimitesVitalSign() {
         global $db;
-
         $query = 'INSERT INTO limitesvitalsignspatient(id_patient, min_temp, max_temp, min_spo2, max_spo2, min_heartRate, max_heartRate, min_pression, max_pression, min_glucose, max_glucose) VALUES(:id_patient, :min_temp, :max_temp, :min_spo2, :max_spo2, :min_heartRate, :max_heartRate, :min_pression, :max_pression, :min_glucose, :max_glucose)';
+
         $prepare_query = $db->prepare($query);
-        $exection = $prepare_query->execute([
+        $execution = $prepare_query->execute([
             ':id_patient' => $this->id_patient, 
             ':min_temp' => $this->min_temp, 
             ':max_temp' => $this->max_temp, 
@@ -46,7 +46,7 @@ class Limitesvitalsignspatient {
             ':max_glucose' => $this->max_glucose
         ]);
 
-        return $exection ? true : false;
+        return $execution ? true : false;
     }
 
     static function updateLimitesVitalSign($id_patient, $min_temp, $max_temp, $min_spo2, $max_spo2, $min_heartRate, $max_heartRate, $min_pression, $max_pression, $min_glucose, $max_glucose) {

@@ -60,7 +60,11 @@ class Patient {
             ':patient_role' => $this->patient_role
         ]);
 
-        return $execution ? true : false;
+        if($execution) {
+            // Récupération de l'identifiant généré après l'insertion
+            $lastId = $db->lastInsertId();
+            return $lastId;
+        } else return null;
     }
 
     // FUNCTION GET ID PATIENTS
@@ -75,8 +79,7 @@ class Patient {
         $patients = [];
         if($execution) {
             while($data = $prepareQuery->fetch()) {
-                $patient = new Patient($data['id_doctor'], $data['id_doctor_archived'],$data['patient_name'], $data['patient_postname'], $data['patient_surname'], $data['patient_gender'], $data['patient_phone_number'], $data['patient_mail'], $data['patient_password'], $data['patient_picture'], $data['patient_commune'], $data['patient_quater'], $data['patient_date_created'], $data['patient_age'], $data['patient_size'],$data['patient_weight'],$data['patient_role']);                
-        
+                $patient = new Patient($data['id_doctor'], $data['id_doctor_archived'], $data['patient_name'], $data['patient_postname'], $data['patient_surname'], $data['patient_gender'], $data['patient_phone_number'], $data['patient_mail'], $data['patient_password'], $data['patient_picture'], $data['patient_commune'], $data['patient_quater'], $data['patient_date_created'], $data['patient_age'], $data['patient_size'],$data['patient_weight'],$data['patient_role']);                
                 $patients[$data['id']]= $patient;
             } 
         }
@@ -91,8 +94,9 @@ class Patient {
         return $idPatient;
     }
 
+    
     // FUNCTION GET ALL PATIENTS FOLLOWING
-    static function getAllPatientsFollow($idDoctorCenter) {
+    static function getAllPatientsFollow() {
         global $db;
 
         $query = 'SELECT * FROM patient WHERE 1';
@@ -102,8 +106,8 @@ class Patient {
         $patients = [];
         if($execution) {
             while($data = $prepareQuery->fetch()) {
-                if(($data['id_doctor'] !== $idDoctorCenter) && ($data['id_doctor'] !== $data['id_doctor_archived'])) {
-                    $patient = new Patient($data['id_doctor'], $data['id_doctor_archived'],$data['patient_name'], $data['patient_postname'], $data['patient_surname'], $data['patient_gender'], $data['patient_phone_number'], $data['patient_mail'], $data['patient_password'], $data['patient_picture'], $data['patient_commune'], $data['patient_quater'], $data['patient_date_created'], $data['patient_age'], $data['patient_size'],$data['patient_weight'],$data['patient_role']);                
+                if(($data['id_doctor'] !== $data['id_doctor_archived']) && ($data['id_doctor'] !== null)) {
+                    $patient = new Patient($data['id_doctor'], $data['id_doctor_archived'], $data['patient_name'], $data['patient_postname'], $data['patient_surname'], $data['patient_gender'], $data['patient_phone_number'], $data['patient_mail'], $data['patient_password'], $data['patient_picture'], $data['patient_commune'], $data['patient_quater'], $data['patient_date_created'], $data['patient_age'], $data['patient_size'],$data['patient_weight'],$data['patient_role']);                
 
                     array_push($patients, $patient);
                 }
@@ -125,7 +129,7 @@ class Patient {
         $patients = [];
         if($execution) {
             while($data = $prepareQuery->fetch()) {
-                $patient = new Patient($data['id_doctor'], $data['id_doctor_archived'],$data['patient_name'], $data['patient_postname'], $data['patient_surname'], $data['patient_gender'], $data['patient_phone_number'], $data['patient_mail'], $data['patient_password'], $data['patient_picture'], $data['patient_commune'], $data['patient_quater'], $data['patient_date_created'], $data['patient_age'], $data['patient_size'],$data['patient_weight'],$data['patient_role']);                
+                $patient = new Patient($data['id_doctor'], $data['id_doctor_archived'], $data['patient_name'], $data['patient_postname'], $data['patient_surname'], $data['patient_gender'], $data['patient_phone_number'], $data['patient_mail'], $data['patient_password'], $data['patient_picture'], $data['patient_commune'], $data['patient_quater'], $data['patient_date_created'], $data['patient_age'], $data['patient_size'],$data['patient_weight'],$data['patient_role']);                
 
                 array_push($patients, $patient);
             } 
@@ -144,7 +148,7 @@ class Patient {
 
         if($execution) {
             if($data = $prepareQuery->fetch()) {
-                $patient = new Patient($data['id_doctor'], $data['id_doctor_archived'],$data['patient_name'], $data['patient_postname'], $data['patient_surname'], $data['patient_gender'], $data['patient_phone_number'], $data['patient_mail'], $data['patient_password'], $data['patient_picture'], $data['patient_commune'], $data['patient_quater'], $data['patient_date_created'], $data['patient_age'], $data['patient_size'],$data['patient_weight'],$data['patient_role']);                
+                $patient = new Patient($data['id_doctor'], $data['id_doctor_archived'], $data['patient_name'], $data['patient_postname'], $data['patient_surname'], $data['patient_gender'], $data['patient_phone_number'], $data['patient_mail'], $data['patient_password'], $data['patient_picture'], $data['patient_commune'], $data['patient_quater'], $data['patient_date_created'], $data['patient_age'], $data['patient_size'],$data['patient_weight'],$data['patient_role']);                
 
                 return $patient;
             } else return [];
@@ -170,9 +174,7 @@ class Patient {
                     array_push($patients, $patient);
                 }
             } 
-
             return $patients;
-
         } else return [];
     }
 
@@ -202,7 +204,7 @@ class Patient {
     static function getTheLastPatient() {
         global $db;
 
-        $query = 'SELECT * FROM patient ORDER BY patient_date_created DESC';
+        $query = 'SELECT * FROM patient ORDER BY id DESC LIMIT 1';
         $prepareQuery = $db->prepare($query);
         $execution = $prepareQuery->execute([]);
 

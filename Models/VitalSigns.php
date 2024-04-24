@@ -13,7 +13,6 @@ class VitalSigns {
     private $vital_date;
     private $sync_vitalSign;
 
-
     // CONSTRUCT
     public function __construct($id_local, $id_patient, $temperature, $heart_rate, $oxygen_level, $blood_glucose, $systolic_blood, $diastolic_blood, $vital_hour, $vital_date, $sync_vitalSign) {
         $this->id_local = $id_local;
@@ -124,7 +123,7 @@ class VitalSigns {
     static function getAllVitalSignsForPatient($id_patient) {
         global $db;
 
-        $query = "SELECT * FROM vitalsigns WHERE id_patient = :id_patient ORDER BY id DESC LIMIT 5";
+        $query = "SELECT * FROM vitalsigns WHERE id_patient = :id_patient ORDER BY id DESC LIMIT 24";
  
         $prepareQuery = $db->prepare($query);
         $execution = $prepareQuery->execute([

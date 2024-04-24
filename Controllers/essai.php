@@ -1,18 +1,14 @@
-<?php 
+<?php
   include_once "../Configuration/config.php";
-  include_once "../Models/notifications.php";
+  include_once "../Models/limitesvitalsignspatient.php";
 
-  
-    $ID_DOCTOR = 4;
-    $notifications = Notifications :: getAllNotifications();
+  $patientId = 54;
+  $limitesVital = new Limitesvitalsignspatient($patientId, 36, 38, 90, 100, 50, 100, "108/75", "126/83", 70, 110);
+     
+  if($limitesVital->createLimitesVitalSign()) {
+      echo "Saluuuuuuuuuuuuuuu";
+  } else {
+    echo "ca ne marche pas";
+  }
 
-    // foreach($vitalSignsPatient : $vitalS) {
-    // var_dump($notifications);
-    // die;
-    // }
-
-    foreach($notifications as $notification) {
-        if($notification->isANotificationForDocto($ID_DOCTOR)) {
-           echo "yes";
-        }
-    }
+    // echo "ca ne marche pas";

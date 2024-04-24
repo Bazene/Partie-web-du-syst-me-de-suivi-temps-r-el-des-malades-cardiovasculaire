@@ -1,3 +1,7 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
 .alert_erreurs {
     display: flex;
     flex-direction: row;
@@ -30,7 +34,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 
@@ -41,26 +45,24 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .part2 {
     width: 40%;
     color: white;
     background-color: #1F57EC;
-    padding:  50px 0 50px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .part2 > p {
-    padding:40px; 
+    padding:0px 40px 40px 40px; 
     text-align:center;
     color: rgba(255, 255, 255, 70%);
 }
@@ -83,22 +85,28 @@
 }
 
 .inputs > input {
-    padding: 7px;
+    padding: 10px;
     padding-left: 20px;
     margin-bottom: 20px;
-    border-radius: 20px;
     border : 0px;
-    box-shadow:0px 0px 3px 3px rgba(31, 87, 236, 40%);
+    background-color: rgba(128, 128, 128, 20%);
 }
 
 .inputs {
     margin-bottom:10px;
 }
 
+.inputs_submit {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+}
+
 .inputs_submit > input {
-    width: 100%;
-    padding: 7px;
-    background-color: #1F57EC;
+    width: 100px;
+    padding:10px;
+    background-color:#1F57EC;
     border: 0px;
     border-radius: 20px;
     color: white;

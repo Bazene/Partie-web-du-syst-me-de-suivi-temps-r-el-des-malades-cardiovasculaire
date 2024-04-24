@@ -9,6 +9,8 @@
     header("Content-Type: application/json");    
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+
         // Récupérer les données JSON envoyées dans la requête POST
         $listVitalSigns = json_decode(file_get_contents('php://input'), true);
 
@@ -38,7 +40,7 @@
                 if($new_VitalSign->isInTable()) {
                     if($new_VitalSign->updateVitalSign()) {
                         array_push($identifiants, $id_local);                        
-                    
+                        
                         // for mail
                         $notificationMail = new NotificationSender(); 
                     
@@ -53,61 +55,11 @@
                 } else {
                     if($new_VitalSign->createVitalSign()) {
                         array_push($identifiants, $id_local);
-                    
-                        // for mail
-                        $notificationMail = new NotificationSender(); 
-                    
-                        if($temperature > $limitesValues->getMax_temp() || $temperature < $limitesValues->getMin_temp()) {
-                            $message = "Temperature : ".$temperature." *C";
-                            $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                            if($new_notification->createNotification()) {
-                                $notificationMail->sendNotification("Température", $temperature, $vital_hour, $vital_date, "bazenesergeamos0@gmail.com");
-                            }
-                        }
                     }
                 }
             }
 
             if(!empty($identifiants)) {
-                
-            
-                // if($heart_rate > $limitesValues->getMax_heartRate() || $heart_rate < $limitesValues->getMin_heartRate())  {
-                //     $message = "Frequence cardiaque : ".$heart_rate." BPM";
-                //     $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                //     if($new_notification->createNotification()) {
-            
-                //     }
-                    
-                // }
-            
-                // if($oxygen_level < $limitesValues->getMin_spo2() || $oxygen_level > $limitesValues->getMax_spo2())  {
-                //     $message = "Niveau d'oxygene : ".$oxygen_level." %";
-                //     $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                //     if($new_notification->createNotification()) {
-            
-                //     }      
-                // }
-            
-                // if($blood_glucose !== 0) {
-                //     if($blood_glucose >= $limitesValues->getMax_glucose() || $blood_glucose <= $limitesValues->getMin_glucose()) {
-                //         $message = "Glycémie : ".$blood_glucose." mg/dL";
-                //         $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                //         if($new_notification->createNotification()) {
-            
-                //         }
-                //     }
-                // }
-            
-                // if(($systolic_blood !== 0) && ($diastolic_blood !== 0)) {
-                //     if(($systolic_blood >= intval($max_systol_diastol[0]) && $diastolic_blood >= intval($max_systol_diastol[1])) || ($systolic_blood <= intval($min_systol_diastol[0]) && $diastolic_blood <= intval($min_systol_diastol[1]))) {
-                //         $message = "Tension artérielle : ".$systolic_blood." / ".$diastolic_blood." mmHg";
-                //         $new_notification = new Notifications($id_patient, $message, $vital_date, $vital_hour, 0);
-                //         if($new_notification->createNotification()) {
-            
-                //         }
-                //     }
-                // }
-
                 // data that will be returned to the client
                 $responseData = array(
                     'success' => true, 
@@ -116,7 +68,6 @@
                 );            
             
                 echo json_encode($responseData);
-
             } else {
                 echo json_encode(["success" => false, "error" => "Echec d'enregistrement dans la base"]);
             }
@@ -126,6 +77,5 @@
         }
 
     } else {
-        echo json_encode(["success" => false, "error" => "Invalid request method"]);
+        echo json_encode(["success" => false, "error" => "Invalid request method"]);        
     }
-
