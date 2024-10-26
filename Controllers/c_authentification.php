@@ -14,7 +14,6 @@ if(isset($_POST) && !empty($_POST)) {
     $authentification_result_doctor = Doctor :: authentification($user_name, $password_key);
     $authentification_result_tuteur = Tuteur :: authentification($user_name, $password_key);
 
-
     if($authentification_result_admin) {
         unset($_SESSION['erreurs_aut']);
         $_SESSION['connected'] = "admin";

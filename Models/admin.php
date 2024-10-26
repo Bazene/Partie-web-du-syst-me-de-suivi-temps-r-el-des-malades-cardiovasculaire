@@ -24,11 +24,12 @@ class Admin {
     }
 
     // AUTHENTIFICATION FONCTION FOR ADMIN
-    static function authentification($ADMIN_NAME, $ADMIN_PASSWORD) {
+    public static function authentification($ADMIN_NAME, $ADMIN_PASSWORD) {
         global $db;
 
         $query = 'SELECT * FROM admin_user WHERE admin_name = :admin_name AND admin_password = :admin_password';
         $preparequery = $db->prepare($query);
+    
         $execution = $preparequery->execute([
             ':admin_name' => $ADMIN_NAME,
             ':admin_password' => $ADMIN_PASSWORD
@@ -36,9 +37,8 @@ class Admin {
 
         if($execution) {
             return $preparequery->fetch() ? true : false;
-        }
+        } else return false;
     }
-
 
     // GETTERS
     public function getAdminName() { return $this->admin_name; }
