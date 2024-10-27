@@ -1,4 +1,18 @@
-CREATE TABLE admin (
+CREATE TABLE limitesvitalsignspatient (
+    id_patient INT PRIMARY KEY,           -- Patient ID, assuming it's unique per patient
+    min_temp DECIMAL(4, 2),               -- Minimum temperature with 2 decimal places
+    max_temp DECIMAL(4, 2),               -- Maximum temperature with 2 decimal places
+    min_spo2 TINYINT UNSIGNED,            -- Minimum SpO2 level (0-255 if unsigned)
+    max_spo2 TINYINT UNSIGNED,            -- Maximum SpO2 level (0-255 if unsigned)
+    min_heartRate TINYINT UNSIGNED,       -- Minimum heart rate (0-255 if unsigned)
+    max_heartRate TINYINT UNSIGNED,       -- Maximum heart rate (0-255 if unsigned)
+    min_pression DECIMAL(5, 2),           -- Minimum blood pressure with 2 decimal places
+    max_pression DECIMAL(5, 2),           -- Maximum blood pressure with 2 decimal places
+    min_glucose DECIMAL(5, 2),            -- Minimum glucose level with 2 decimal places
+    max_glucose DECIMAL(5, 2)             -- Maximum glucose level with 2 decimal places
+);
+
+CREATE TABLE admin_user (
     id INT NOT NULL AUTO_INCREMENT,
     admin_name VARCHAR(100) NOT NULL, 
     admin_postname VARCHAR(100) NOT NULL, 
@@ -53,26 +67,10 @@ CREATE TABLE notifications (
     id_patient INT NOT NULL,
     notification_content VARCHAR(300),
     notification_date DATETIME NOT NULL,
-    notification_hour VARCHAR(20),
-    active TINYINT,
     PRIMARY KEY(id),
     FOREIGN KEY (id_patient) REFERENCES patient(id)
 );
 
-CREATE TABLE limitesvitalsignspatient (
-    id_patient INT PRIMARY KEY,           -- Patient ID, assuming it's unique per patient
-    min_temp DECIMAL(4, 2),               -- Minimum temperature with 2 decimal places
-    max_temp DECIMAL(4, 2),               -- Maximum temperature with 2 decimal places
-    min_spo2 TINYINT UNSIGNED,            -- Minimum SpO2 level (0-255 if unsigned)
-    max_spo2 TINYINT UNSIGNED,            -- Maximum SpO2 level (0-255 if unsigned)
-    min_heartRate TINYINT UNSIGNED,       -- Minimum heart rate (0-255 if unsigned)
-    max_heartRate TINYINT UNSIGNED,       -- Maximum heart rate (0-255 if unsigned)
-    min_pression DECIMAL(5, 2),           -- Minimum blood pressure with 2 decimal places
-    max_pression DECIMAL(5, 2),           -- Maximum blood pressure with 2 decimal places
-    min_glucose DECIMAL(5, 2),            -- Minimum glucose level with 2 decimal places
-    max_glucose DECIMAL(5, 2)             -- Maximum glucose level with 2 decimal places
-);
-     
 CREATE TABLE doctor (
     id INT NOT NULL AUTO_INCREMENT,
     doctor_name VARCHAR(100) NOT NULL, 
